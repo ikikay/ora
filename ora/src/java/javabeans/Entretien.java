@@ -37,7 +37,7 @@ public class Entretien implements Serializable {
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dateEntretien;
 
-     @OneToOne(optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "id_parcours", unique = false, nullable = false, updatable = true)
     private Parcours parcours;
 

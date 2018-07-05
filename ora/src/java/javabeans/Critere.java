@@ -5,10 +5,44 @@
  */
 package javabeans;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  *
  * @author iLaziKx
  */
-public class Critere {
-    
+@Entity
+@Table(name = "critere")
+public class Critere implements Serializable{
+
+    private static final long serialVersionUID = -5892169641074303723L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idCritere", nullable = false, length = 255)
+    private int idCandidat;
+
+    @Column(name = "libelle")
+    private String libelle;
+
+    @Column(name = "niveau")
+    private int niveau;
+
+    @ManyToOne
+    @JoinColumn(name="fk_categorieCritere")
+    private Categorie_critere categorieCritere;
+
 }

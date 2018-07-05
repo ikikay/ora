@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import tools.LocalDateAttributeConverter;
@@ -24,8 +26,9 @@ public class Candidat implements Serializable {
 
     private static final long serialVersionUID = -5892169641074303723L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCandidat", nullable = false, length = 255)
-    private String idCandidat;
+    private int idCandidat;
 
     @Column(name = "nom", nullable = false, length = 255)
     private String nom;
@@ -43,7 +46,7 @@ public class Candidat implements Serializable {
     private String rue;
     
     @Column(name = "dteNaissance", nullable = false, length = 255)
-    @Convert(converter = LocalDateAttributeConverter.class) 
+    @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dteNaissance;
     
     @Column(name = "tel", nullable = false, length = 10)
@@ -72,14 +75,12 @@ public class Candidat implements Serializable {
 
     @Column(name = "scooter")
     private Boolean scooter;   
-
-    @Column(name = "is_apprenti")
-    private Boolean is_apprenti;     
+   
 
     public Candidat() {
     }    
     
-    public Candidat(String idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter, Boolean is_apprenti) {
+    public Candidat(int idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter) {
         this.idCandidat = idCandidat;
         this.nom = nom;
         this.prenom = prenom;
@@ -96,14 +97,13 @@ public class Candidat implements Serializable {
         this.voiture = voiture;
         this.moto = moto;
         this.scooter = scooter;
-        this.is_apprenti = is_apprenti;
     }
 
-    public String getIdCandidat() {
+    public int getIdCandidat() {
         return idCandidat;
     }
 
-    public void setIdCandidat(String idCandidat) {
+    public void setIdCandidat(int idCandidat) {
         this.idCandidat = idCandidat;
     }
 
@@ -227,13 +227,6 @@ public class Candidat implements Serializable {
         this.scooter = scooter;
     }
 
-    public Boolean getIs_apprenti() {
-        return is_apprenti;
-    }
-
-    public void setIs_apprenti(Boolean is_apprenti) {
-        this.is_apprenti = is_apprenti;
-    }
     
     
 }
