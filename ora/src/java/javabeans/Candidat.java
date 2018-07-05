@@ -12,6 +12,7 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import tools.LocalDateAttributeConverter;
 
 /**
  *
@@ -42,7 +43,7 @@ public class Candidat implements Serializable {
     private String rue;
     
     @Column(name = "dteNaissance", nullable = false, length = 255)
-   @Convert(converter = LocalDateAttributeConverter.class) 
+    @Convert(converter = LocalDateAttributeConverter.class) 
     private LocalDate dteNaissance;
     
     @Column(name = "tel", nullable = false, length = 10)
