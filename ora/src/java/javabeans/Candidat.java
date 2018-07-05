@@ -8,6 +8,7 @@ package javabeans;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -41,6 +42,7 @@ public class Candidat implements Serializable {
     private String rue;
     
     @Column(name = "dteNaissance", nullable = false, length = 255)
+   @Convert(converter = LocalDateAttributeConverter.class) 
     private LocalDate dteNaissance;
     
     @Column(name = "tel", nullable = false, length = 10)
@@ -55,22 +57,22 @@ public class Candidat implements Serializable {
     @Column(name = "secuSocial", nullable = false, length = 15)
     private String secuSocial;
 
-    @Column(name = "permisA", nullable = false, length = 10)
+    @Column(name = "permisA")
     private Boolean permisA;
 
-    @Column(name = "permisB", nullable = false, length = 10)
+    @Column(name = "permisB")
     private Boolean permisB;    
 
-    @Column(name = "voiture", nullable = false, length = 10)
+    @Column(name = "voiture")
     private Boolean voiture; 
     
-    @Column(name = "moto", nullable = false, length = 10)
+    @Column(name = "moto")
     private Boolean moto;   
 
-    @Column(name = "scooter", nullable = false, length = 10)
+    @Column(name = "scooter")
     private Boolean scooter;   
 
-    @Column(name = "is_apprenti", nullable = false, length = 10)
+    @Column(name = "is_apprenti")
     private Boolean is_apprenti;     
 
     public Candidat() {
