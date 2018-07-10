@@ -32,31 +32,31 @@ public class Candidat implements Serializable {
 
     @Column(name = "nom", nullable = false, length = 255)
     private String nom;
-    
+
     @Column(name = "prenom", nullable = false, length = 255)
     private String prenom;
-    
-    @Column(name = "codePostal", nullable = false, length = 5)
-    private String codePostal;
-    
-    @Column(name = "ville", nullable = false, length = 255)
-    private String ville;
-    
+
     @Column(name = "rue", nullable = false, length = 255)
     private String rue;
-    
+
+    @Column(name = "codePostal", nullable = false, length = 5)
+    private String codePostal;
+
+    @Column(name = "ville", nullable = false, length = 255)
+    private String ville;
+
     @Column(name = "dteNaissance", nullable = false, length = 255)
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dteNaissance;
-    
+
     @Column(name = "tel", nullable = false, length = 10)
     private String tel;
 
     @Column(name = "portable", nullable = false, length = 10)
     private String portable;
 
-    @Column(name = "email", nullable = false, length = 255)
-    private String email;
+    @Column(name = "eMail", nullable = false, length = 255)
+    private String eMail;
 
     @Column(name = "secuSocial", nullable = false, length = 15)
     private String secuSocial;
@@ -65,21 +65,20 @@ public class Candidat implements Serializable {
     private Boolean permisA;
 
     @Column(name = "permisB")
-    private Boolean permisB;    
+    private Boolean permisB;
 
     @Column(name = "voiture")
-    private Boolean voiture; 
-    
+    private Boolean voiture;
+
     @Column(name = "moto")
-    private Boolean moto;   
+    private Boolean moto;
 
     @Column(name = "scooter")
-    private Boolean scooter;   
-   
+    private Boolean scooter;
 
     public Candidat() {
-    }    
-    
+    }
+
     public Candidat(int idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter) {
         this.idCandidat = idCandidat;
         this.nom = nom;
@@ -90,7 +89,7 @@ public class Candidat implements Serializable {
         this.dteNaissance = dteNaissance;
         this.tel = tel;
         this.portable = portable;
-        this.email = email;
+        this.eMail = email;
         this.secuSocial = secuSocial;
         this.permisA = permisA;
         this.permisB = permisB;
@@ -172,11 +171,11 @@ public class Candidat implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return eMail;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.eMail = email;
     }
 
     public String getSecuSocial() {
@@ -227,6 +226,4 @@ public class Candidat implements Serializable {
         this.scooter = scooter;
     }
 
-    
-    
 }

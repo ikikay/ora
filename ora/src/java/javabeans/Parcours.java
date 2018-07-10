@@ -6,18 +6,12 @@
 package javabeans;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,8 +19,9 @@ import javax.persistence.Table;
  * @author Admin
  */
 @Entity
-@Table(name="parcours")
-public class Parcours implements Serializable{
+@Table(name = "parcours")
+public class Parcours implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_parcours")
@@ -35,11 +30,11 @@ public class Parcours implements Serializable{
     private String actuelle;
     @Column(name = "etablissement")
     private String etablissement;
-        @Column(name = "diplome")
+    @Column(name = "diplome")
     private Boolean diplome;
     @Column(name = "commentaire")
-    private String commentaire;   
-    
+    private String commentaire;
+
     public Parcours() {
     }
 
@@ -91,20 +86,21 @@ public class Parcours implements Serializable{
         this.commentaire = commentaire;
     }
 
-
-
-
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Parcours)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Parcours)) {
+            return false;
+        }
         Parcours article = (Parcours) o;
         return Objects.equals(getId(), article.getId());
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(getId());
     }
-    
+
 }

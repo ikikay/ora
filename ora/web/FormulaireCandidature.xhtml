@@ -30,7 +30,7 @@
                 </p:inputTextarea>
 
                 <h:outputText value="Code Postale"/>
-                <p:inputMask id="cp" mask="99 999"/>
+                <p:inputMask id="codePostal" mask="99 999"/>
 
                 <h:outputText value="Ville"/>   
                 <p:inputText id="ville">
@@ -38,13 +38,13 @@
                 </p:inputText>
 
                 <h:outputText value="Date de Naissance"/>
-                <p:inputMask id="dateDeNaissance" mask="99/99/9999"/>
+                <p:inputMask id="dteNaissance" mask="99/99/9999"/>
 
                 <h:outputText value="Téléphone fixe"/>
-                <p:inputMask id="telFixe" mask="99.99.99.99.99"/>
+                <p:inputMask id="tel" mask="99.99.99.99.99"/>
 
                 <h:outputText value="Téléphone portable"/>
-                <p:inputMask id="telPortable" mask="99.99.99.99.99"/>
+                <p:inputMask id="portable" mask="99.99.99.99.99"/>
 
                 <h:outputLabel value="E-mail:" for="email" />
                 <p:inputText id="email"
@@ -56,14 +56,14 @@
                 </p:inputText>
 
                 <h:outputText value="N° Sécurité Sociale"/>
-                <p:inputMask id="nSS" mask="9 99 99 99 999 999 99"/>
+                <p:inputMask id="secuSocial" mask="9 99 99 99 999 999 99"/>
             </h:panelGrid> 
 
             <h3>Projet</h3>
             <h:panelGrid columns="2">
 
                 <h:outputLabel for="diplome" value="Diplome" />
-                <p:selectCheckboxMenu id="diplome" label="Promotion"
+                <p:selectCheckboxMenu id="projet" label="Promotion"
                                       filter="true" filterMatchMode="startsWith">
                     <f:selectItems/>
                 </p:selectCheckboxMenu>
@@ -73,18 +73,18 @@
             <h:panelGrid columns="2">
 
                 <h:outputText value="Diplome le plus récent"/>
-                <p:inputText id="diplomeRecent" />
+                <p:inputText id="actuelle" />
 
                 <h:outputText value="Etablissement (et lieu)"/>
-                <p:inputText id="etablissementLieu" />
+                <p:inputText id="etablissement" />
 
                 <h:outputText value="Etat du diplome"/>
                 <h:panelGrid columns="5">
-                    <p:selectOneRadio id="etatDiplome">
-                        <f:selectItem itemLabel="Obtenu" itemValue="obtenu" />
-                        <f:selectItem itemLabel="Préparé" itemValue="prepare" id="etatDiplomePrepare"/>                    
+                    <p:selectOneRadio id="diplome">
+                        <f:selectItem itemLabel="Obtenu" itemValue="obtenu" id="diplomeTrue" />
+                        <f:selectItem itemLabel="Préparé" itemValue="prepare" id="diplomeFalse"/>                    
                     </p:selectOneRadio>
-                    <p:inputText id="etatDiplomeCommentaire"/>
+                    <p:inputText id="commentaire"/>
                 </h:panelGrid>
             </h:panelGrid>  
 
@@ -92,8 +92,8 @@
             <h:panelGrid id="panelMobilite" columns="2">
 
                 <h:outputText value="Permis voiture: " />
-                <p:selectBooleanButton id="permisVoiture" onLabel="Oui" offLabel="Non" style="width:60px">
-                    <f:ajax listener="#{formulaireCandidature.clickOnPermisVoiture()}" execute="permisVoiture" render="panelMobilite"/>
+                <p:selectBooleanButton id="permisB" onLabel="Oui" offLabel="Non" style="width:60px">
+                    <f:ajax listener="#{formulaireCandidature.clickOnPermisVoiture()}" execute="permisB" render="panelMobilite"/>
                 </p:selectBooleanButton>
 
                 <h:outputText value="Voiture: " rendered="#{formulaireCandidature.visibiliteVoiture}"/>
@@ -102,8 +102,8 @@
                 </p:selectBooleanButton>
 
                 <h:outputText value="Permis moto: " rendered="#{formulaireCandidature.visibilitePermisMoto}"/>
-                <p:selectBooleanButton id="permisMoto" onLabel="Oui" offLabel="Non" rendered="#{formulaireCandidature.visibilitePermisMoto}" style="width:60px">
-                    <f:ajax listener="#{formulaireCandidature.clickOnPermisMoto()}" execute="permisMoto" render="panelMobilite"/>
+                <p:selectBooleanButton id="permisA" onLabel="Oui" offLabel="Non" rendered="#{formulaireCandidature.visibilitePermisMoto}" style="width:60px">
+                    <f:ajax listener="#{formulaireCandidature.clickOnPermisMoto()}" execute="permisA" render="panelMobilite"/>
                 </p:selectBooleanButton>
 
                 <h:outputText value="Moto: " rendered="#{formulaireCandidature.visibiliteMoto}"/>
