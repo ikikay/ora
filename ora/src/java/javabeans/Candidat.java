@@ -32,23 +32,23 @@ public class Candidat implements Serializable {
 
     @Column(name = "nom", nullable = false, length = 255)
     private String nom;
-    
+
     @Column(name = "prenom", nullable = false, length = 255)
     private String prenom;
-    
-    @Column(name = "codePostal", nullable = false, length = 5)
-    private String codePostal;
-    
-    @Column(name = "ville", nullable = false, length = 255)
-    private String ville;
-    
+
     @Column(name = "rue", nullable = false, length = 255)
     private String rue;
-    
+
+    @Column(name = "codePostal", nullable = false, length = 5)
+    private String codePostal;
+
+    @Column(name = "ville", nullable = false, length = 255)
+    private String ville;
+
     @Column(name = "dteNaissance", nullable = false, length = 255)
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dteNaissance;
-    
+
     @Column(name = "tel", nullable = false, length = 10)
     private String tel;
 
@@ -65,21 +65,20 @@ public class Candidat implements Serializable {
     private Boolean permisA;
 
     @Column(name = "permisB")
-    private Boolean permisB;    
+    private Boolean permisB;
 
     @Column(name = "voiture")
-    private Boolean voiture; 
-    
+    private Boolean voiture;
+
     @Column(name = "moto")
-    private Boolean moto;   
+    private Boolean moto;
 
     @Column(name = "scooter")
-    private Boolean scooter;   
-   
+    private Boolean scooter;
 
     public Candidat() {
-    }    
-    
+    }
+
     public Candidat(int idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter) {
         this.idCandidat = idCandidat;
         this.nom = nom;
@@ -227,6 +226,4 @@ public class Candidat implements Serializable {
         this.scooter = scooter;
     }
 
-    
-    
 }
