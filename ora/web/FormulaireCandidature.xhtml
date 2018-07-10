@@ -52,8 +52,7 @@
                              title="Email"
                              validatorMessage="E-mail non valide">
                     <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
-                    <f:validateRegex
-                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                 </p:inputText>
 
                 <h:outputText value="N° Sécurité Sociale"/>
@@ -191,7 +190,9 @@
                     </p:selectOneRadio>
                 </h:panelGrid>
 
-            </h:panelGrid>  
+            </h:panelGrid>
+            
+            <h:commandButton value="Valider" />
 
         </h:form>
 

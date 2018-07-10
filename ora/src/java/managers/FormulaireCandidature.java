@@ -26,41 +26,41 @@ public class FormulaireCandidature implements Serializable {
 
     //Candidat
     @NotNull(message="Champs 'Nom' obligatoire")
-    @Size(min=2, max=255, message = "Taille inccorect !")
+    @Size(min=2, max=255, message = "Taille du champs 'Nom' inccorect !")
     private String nom;
     
     @NotNull(message="Champs 'Prénom' obligatoire")
-    @Size(min=2, max=255, message = "Taille inccorect !")
+    @Size(min=2, max=255, message = "Taille du champs 'Prénom' inccorect !")
     private String prenom;
     
     @NotNull(message="Champs 'Rue' obligatoire")
-    @Size(min=2, max=255, message = "Taille inccorect !")
+    @Size(min=2, max=255, message = "Taille du champs 'Rue' inccorect !")
     private String rue;
     
     @NotNull(message="Champs 'Code Postal' obligatoire")
-    @Size(min=5, max=5, message = "Taille inccorect !")
+    @Size(min=5, max=5, message = "Taille du champs 'Code Postal' inccorect !")
     private String codePostal;
     
     @NotNull(message="Champs 'Ville' obligatoire")
-    @Size(min=2, max=255, message = "Taille inccorect !")
+    @Size(min=2, max=255, message = "Taille du champs 'Ville' inccorect !")
     private String ville;
     
     @NotNull(message="Champs 'Date de naissance' obligatoire")
-    @Size(min=8, max=10, message = "Taille inccorect !")
+    @Size(min=8, max=10, message = "Taille du champs 'Date de naissance' inccorect !")
     private String dateDeNaissance; //TODO LocalDate
     
-    @Size(min=10, max=10, message = "Taille inccorect !")
+    @Size(min=0, max=10, message = "Taille du champs 'Téléphone fixe' inccorect !")
     private String tel;
     
-    @Size(min=10, max=10, message = "Taille inccorect !")
+    @Size(min=0, max=10, message = "Taille du champs 'Téléphone Portable' inccorect !")
     private String portable;
     
     @NotNull(message="Champs 'E-Mail' obligatoire")
-    @Size(min=2, max=255, message = "Taille inccorect !")
+    @Size(min=2, max=255, message = "Taille du champs 'E-Mail' inccorect !")
     @Pattern(regexp=".*@*\\..{2,3}", message ="E-Mail inccorrect !")
     private String email;
     
-    @Size(min=15, max=15, message = "Taille inccorect !")
+    @Size(min=15, max=15, message = "Taille du champs 'Sécurité Social' inccorect !")
     private String secuSocial;
     
     //Projet
@@ -429,11 +429,7 @@ public class FormulaireCandidature implements Serializable {
 
     public void setAvis(String avis) {
         this.avis = avis;
-    }
-    
-    
-    
-    
+    }  
 
     /*
     Fonctions switch boolean
@@ -505,6 +501,19 @@ public class FormulaireCandidature implements Serializable {
         LocalDate laDate = LocalDate.parse(unString, formatterFormulaireCandidature);
 
         return laDate;
+    }
+    
+    public void testLudovic(){
+        System.out.println("Nom : " + this.nom);
+        System.out.println("Prenom : " + this.prenom);
+        System.out.println("Rue : " + this.rue);
+        System.out.println("Code Postal : " + this.codePostal);
+        System.out.println("Ville : " + this.ville);
+        System.out.println("Date de naissance : " + stringToLocalDate(this.dateDeNaissance) + " : " + this.dateDeNaissance);
+        System.out.println("Téléphone : " + this.tel);
+        System.out.println("Portable : " + this.portable);
+        System.out.println("Email : " + this.email);
+        System.out.println("Sécurité Social : " + this.secuSocial);
     }
 
 }
