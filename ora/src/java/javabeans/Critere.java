@@ -27,7 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "critere")
-public class Critere implements Serializable{
+public class Critere implements Serializable {
 
     private static final long serialVersionUID = -5892169641074303723L;
     @Id
@@ -42,7 +42,70 @@ public class Critere implements Serializable{
     private int niveau;
 
     @ManyToOne
-    @JoinColumn(name="fk_categorieCritere")
+    @JoinColumn(name = "fk_categorieCritere")
     private Categorie_critere categorieCritere;
+
+    @ManyToMany(cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    @JoinTable(
+            name = "entretien_critere",
+            joinColumns = @JoinColumn(name = "idCritere", referencedColumnName = "idCritere"),
+            inverseJoinColumns = @JoinColumn(name = "id_Entretien", referencedColumnName = "id_Entretien"))
+    private List<Entretien> entretien = new ArrayList<Entretien>();
+
+    public Critere() {
+
+    }
+
+    public Critere(int idCandidat, String libelle, int niveau, Categorie_critere categorieCritere) {
+        this.idCandidat = idCandidat;
+        this.libelle = libelle;
+        this.niveau = niveau;
+        this.categorieCritere = categorieCritere;
+    }
+
+    public int getIdCandidat() {
+        return idCandidat;
+    }
+
+    public void setIdCandidat(int idCandidat) {
+        this.idCandidat = idCandidat;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public int getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(int niveau) {
+        this.niveau = niveau;
+    }
+
+    public Categorie_critere getCategorieCritere() {
+        return categorieCritere;
+    }
+
+    public void setCategorieCritere(Categorie_critere categorieCritere) {
+        this.categorieCritere = categorieCritere;
+    }
+
+    public List<Entretien> getEntretien() {
+        return entretien;
+    }
+
+    public void setEntretien(List<Entretien> entretien) {
+        this.entretien = entretien;
+    }
+    
+    
 
 }

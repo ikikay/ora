@@ -7,6 +7,8 @@ package javabeans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -45,15 +48,18 @@ public class Entretien implements Serializable {
     @JoinColumn(name = "idCandidat", unique = false, nullable = false, updatable = true)
     private Candidat candidat;
 
+    @ManyToMany(mappedBy = "entretien")
+    private List<Critere> critere = new ArrayList<Critere>();
+
     public Entretien() {
     }
 
-    public Entretien(int id, String avis, LocalDate dateEntretien, Candidat candidat, Parcours parcours) {
+    public Entretien(int id, String avis, LocalDate dateEntretien, Parcours parcours, Candidat candidat) {
         this.id = id;
         this.avis = avis;
         this.dateEntretien = dateEntretien;
-        this.candidat = candidat;
         this.parcours = parcours;
+        this.candidat = candidat;
     }
 
     public int getId() {
@@ -94,6 +100,14 @@ public class Entretien implements Serializable {
 
     public void setCandidat(Candidat candidat) {
         this.candidat = candidat;
+    }
+
+    public List<Critere> getCritere() {
+        return critere;
+    }
+
+    public void setCritere(List<Critere> critere) {
+        this.critere = critere;
     }
 
 }
