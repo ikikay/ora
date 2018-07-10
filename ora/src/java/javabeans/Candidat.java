@@ -55,8 +55,8 @@ public class Candidat implements Serializable {
     @Column(name = "portable", nullable = false, length = 10)
     private String portable;
 
-    @Column(name = "eMail", nullable = false, length = 255)
-    private String eMail;
+    @Column(name = "email", nullable = false, length = 255)
+    private String email;
 
     @Column(name = "secuSocial", nullable = false, length = 15)
     private String secuSocial;
@@ -89,7 +89,7 @@ public class Candidat implements Serializable {
         this.dteNaissance = dteNaissance;
         this.tel = tel;
         this.portable = portable;
-        this.eMail = email;
+        this.email = email;
         this.secuSocial = secuSocial;
         this.permisA = permisA;
         this.permisB = permisB;
@@ -171,11 +171,11 @@ public class Candidat implements Serializable {
     }
 
     public String getEmail() {
-        return eMail;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.eMail = email;
+        this.email = email;
     }
 
     public String getSecuSocial() {

@@ -7,47 +7,48 @@
 
     </h:head>
     <h:body>
+        
+        <h:messages errorStyle="color:red;"/>
 
         <h:form>
-
-
             <h3>Candidat</h3>
             <h:panelGrid columns="2">
 
                 <h:outputText value="Nom"/>   
-                <p:inputText id="nom">
+                <p:inputText id="nom" value="#{formulaireCandidature.nom}">
                     <p:keyFilter regEx="/[A-Z]/i"/>
                 </p:inputText>
 
                 <h:outputText value="Prenom"/>   
-                <p:inputText id="prenom">
+                <p:inputText id="prenom" value="#{formulaireCandidature.prenom}">
                     <p:keyFilter regEx="/[A-Z]/i"/>
                 </p:inputText>
 
                 <h:outputText value="Rue"/>   
-                <p:inputTextarea rows="2" id="rue">
+                <p:inputTextarea rows="2" id="rue" value="#{formulaireCandidature.rue}">
                     <p:keyFilter regEx="/[A-Z]/i"/>
                 </p:inputTextarea>
 
                 <h:outputText value="Code Postale"/>
-                <p:inputMask id="codePostal" mask="99 999"/>
+                <p:inputMask id="codePostal" value="#{formulaireCandidature.codePostal}" mask="99 999"/>
 
                 <h:outputText value="Ville"/>   
-                <p:inputText id="ville">
+                <p:inputText id="ville" value="#{formulaireCandidature.ville}">
                     <p:keyFilter regEx="/[A-Z]/i"/>
                 </p:inputText>
 
                 <h:outputText value="Date de Naissance"/>
-                <p:inputMask id="dteNaissance" mask="99/99/9999"/>
+                <p:inputMask id="dteNaissance" value="#{formulaireCandidature.dateDeNaissance}" mask="99/99/9999"/>
 
                 <h:outputText value="Téléphone fixe"/>
-                <p:inputMask id="tel" mask="99.99.99.99.99"/>
+                <p:inputMask id="tel" value="#{formulaireCandidature.tel}" mask="99.99.99.99.99"/>
 
                 <h:outputText value="Téléphone portable"/>
-                <p:inputMask id="portable" mask="99.99.99.99.99"/>
+                <p:inputMask id="portable" value="#{formulaireCandidature.portable}" mask="99.99.99.99.99"/>
 
                 <h:outputLabel value="E-mail:" for="email" />
                 <p:inputText id="email"
+                             value="#{formulaireCandidature.email}"
                              title="Email"
                              validatorMessage="E-mail non valide">
                     <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
@@ -56,7 +57,7 @@
                 </p:inputText>
 
                 <h:outputText value="N° Sécurité Sociale"/>
-                <p:inputMask id="secuSocial" mask="9 99 99 99 999 999 99"/>
+                <p:inputMask id="secuSocial" value="#{formulaireCandidature.secuSocial}" mask="9 99 99 99 999 999 99"/>
             </h:panelGrid> 
 
             <h3>Projet</h3>
