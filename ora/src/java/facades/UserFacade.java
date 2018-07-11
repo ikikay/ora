@@ -5,7 +5,7 @@
  */
 package facades;
 
-import javabeans.Candidat;
+import javabeans.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author iLaziKx
  */
 @Stateless
-public class CandidatFacade extends AbstractFacade<Candidat> {
+public class UserFacade extends AbstractFacade<User> {
 
     @PersistenceContext(unitName = "oraPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class CandidatFacade extends AbstractFacade<Candidat> {
         return em;
     }
 
-    public CandidatFacade() {
-        super(Candidat.class);
+    public UserFacade() {
+        super(User.class);
     }
     
 }

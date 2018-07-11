@@ -6,19 +6,28 @@
 package javabeans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import tools.LocalDateAttributeConverter;
 
 @Entity
 @Table(name = "promotion")
@@ -31,31 +40,22 @@ public class Promotion implements Serializable {
     private int id;
     @Column(name = "titre_promotion")
     private String titre;
-    
+
     @ManyToOne
-    @JoinColumn(name = "fk_entretien")
-    private Entretien entretien;
+    private User user;
 
-    /*@ManyToMany(mappedBy = "promotions", fetch = FetchType.LAZY)
-    private Set<Candidat> candidats = new HashSet<Candidat>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
+    private List<Entretien> entretiens;
 
-    public void addCandidat(Candidat candidat) {
-        candidats.add(candidat);
-        candidat.getPromotions().add(this);
+    public List<Entretien> getEntretiens() {
+        return entretiens;
     }
 
-    public void removeCandidat(Candidat candidat) {
-        candidats.remove(candidat);
-        candidat.getPromotions().remove(this);
-    }*/
+    public void setEntretiens(List<Entretien> entretiens) {
+        this.entretiens = entretiens;
+    }
 
-//    public Set<Candidat> getCandidats() {
-//        return candidats;
-//    }
-//
-//    public void setCandidats(Set<Candidat> candidats) {
-//        this.candidats = candidats;
-//    }
+
 
 //   @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
 //   private List<Candidat> candidats;
@@ -83,16 +83,14 @@ public class Promotion implements Serializable {
         this.titre = titre;
     }
 
-//
-//   public List<Candidat> getCommentaires()
-//   {
-//      return candidats;
-//   }
-//
-//   public void setCommentaires(List<Candidat> commentaires)
-//   {
-//      this.candidats = commentaires;
-//   }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -108,10 +106,5 @@ public class Promotion implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
-    }
-
-    @Override
-    public String toString() {
-        return this.titre;
     }
 }
