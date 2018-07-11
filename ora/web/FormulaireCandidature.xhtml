@@ -57,10 +57,11 @@
             <h:panelGrid columns="2">
 
                 <h:outputLabel for="diplome" value="Diplome" />
-                <p:selectCheckboxMenu id="projet" value="#{formulaireCandidature.projet}" label="Promotion"
-                                      filter="true" filterMatchMode="startsWith">
-                    <f:selectItems value="#{formulaireCandidature.lesPromotions}"/>
-                </p:selectCheckboxMenu>
+                <p:selectOneMenu id="diplome" value="#{formulaireCandidature.projet}" converter="promotionConverter"
+                                 filter="true" filterMatchMode="startsWith"  effect="fade" style="width:180px" panelStyle="width:200px">
+                    <f:selectItems value="#{formulaireCandidature.lesPromotions}" var="promotion" itemLabel="#{promotion.titre}" />
+                </p:selectOneMenu>
+
             </h:panelGrid> 
 
             <h3>Etudes/ Situation professionnelle</h3>
@@ -74,7 +75,7 @@
 
                 <h:outputText value="Etat du diplome"/>
                 <h:panelGrid columns="5">
-                    <p:selectBooleanButton id="diplome" value="#{formulaireCandidature.diplome}" onLabel="obtenu" offLabel="prepare" style="width:100px"/>
+                    <p:selectBooleanButton id="etatDiplome" value="#{formulaireCandidature.diplome}" onLabel="obtenu" offLabel="prepare" style="width:100px"/>
                     <p:inputText id="commentaire" value="#{formulaireCandidature.commentaire}" />
                 </h:panelGrid>
             </h:panelGrid>  
@@ -175,7 +176,7 @@
 
             </h:panelGrid>
 
-            <h:commandButton value="Valider" action="#{formulaireCandidature.testLudovic()}"/>
+            <h:commandButton value="Valider" action="#{formulaireCandidature.validationFormulaire()}"/>
 
         </h:form>
 

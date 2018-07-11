@@ -6,9 +6,7 @@
 package javabeans;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,26 +28,6 @@ public class Promotion implements Serializable {
     @Column(name = "titre_promotion")
     private String titre;
 
-    @ManyToMany(mappedBy = "promotions", fetch = FetchType.LAZY)
-    private Set<Candidat> candidats = new HashSet<Candidat>();
-
-    public void addCandidat(Candidat candidat) {
-        candidats.add(candidat);
-        candidat.getPromotions().add(this);
-    }
-
-    public void removeCandidat(Candidat candidat) {
-        candidats.remove(candidat);
-        candidat.getPromotions().remove(this);
-    }
-
-    public Set<Candidat> getCandidats() {
-        return candidats;
-    }
-
-    public void setCandidats(Set<Candidat> candidats) {
-        this.candidats = candidats;
-    }
 
 //   @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
 //   private List<Candidat> candidats;

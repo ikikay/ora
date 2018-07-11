@@ -7,9 +7,7 @@ package javabeans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -80,9 +78,6 @@ public class Candidat implements Serializable {
 
     @Column(name = "scooter")
     private Boolean scooter;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Promotion> promotions = new HashSet<Promotion>();
 
     public Candidat() {
     }
@@ -232,24 +227,6 @@ public class Candidat implements Serializable {
 
     public void setScooter(Boolean scooter) {
         this.scooter = scooter;
-    }
-
-    public Set<Promotion> getPromotions() {
-        return promotions;
-    }
-
-    public void setPromotions(Set<Promotion> promotions) {
-        this.promotions = promotions;
-    }
-
-    public void addPromotion(Promotion promotion) {
-        promotions.add(promotion);
-        promotion.getCandidats().add(this);
-    }
-
-    public void removePromotion(Promotion promotion) {
-        promotions.remove(promotion);
-        promotion.getCandidats().remove(this);
     }
 
     @Override

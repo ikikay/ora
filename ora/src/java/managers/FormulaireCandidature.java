@@ -8,11 +8,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.ArrayList;
 import javabeans.Candidat;
 import javabeans.Entretien;
 import javabeans.Parcours;
 import javabeans.Promotion;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
@@ -78,6 +78,7 @@ public class FormulaireCandidature implements Serializable {
     private String secuSocial;
 
     //Projet
+    @NotNull(message = "Champs 'Diplome obligatoire")
     private Promotion projet;
 
     //Etudes/ Situation professionnelle
@@ -145,7 +146,9 @@ public class FormulaireCandidature implements Serializable {
 
     private String observationEntretien;
     //Conclusion
+    @NotNull(message = "Champs 'Ressenti par rapport à la candidature [...]' obligatoire")
     private String conclusion;
+    @NotNull(message = "Champs Avis' obligatoire")
     private String avis;
 
     /*
@@ -158,14 +161,19 @@ public class FormulaireCandidature implements Serializable {
     private Candidat leCadidatToEdit;
     @EJB
     private CandidatFacade candidatFacade;
-    
+
     private Entretien unEntretientToAdd;
     @EJB
     private EntretienFacade entretienFacade;
-    
+
     private Parcours unParcoursToAdd;
     @EJB
     private ParcoursFacade parcoursFacade;
+
+    @PostConstruct
+    public void init() {
+        ds1 = ds2 = ds3 = e1 = e2 = e3 = e4 = e5 = e6 = e7 = 1;
+    }
 
     /*
     Getters et Setters
@@ -309,10 +317,11 @@ public class FormulaireCandidature implements Serializable {
     public List<Promotion> getLesPromotions() {
         try {
             lesPromotions = promotionFacade.findAll();
-            return lesPromotions;
+            
         } catch (EJBException ee) {
-            return lesPromotions = new ArrayList<>();
+           // return lesPromotions = new ArrayList<>();
         }
+        return lesPromotions;
     }
 
     public void setLesPromotions(List<Promotion> lesPromotions) {
@@ -493,7 +502,7 @@ public class FormulaireCandidature implements Serializable {
         }
     }
 
-    public void testLudovic() {
+    public void validationFormulaire() {
         System.out.println("Nom : " + this.nom);
         System.out.println("Prenom : " + this.prenom);
         System.out.println("Rue : " + this.rue);
@@ -526,6 +535,8 @@ public class FormulaireCandidature implements Serializable {
         System.out.println("Observation Entretien : " + this.observationEntretien);
         System.out.println("Conclusion : " + this.conclusion);
         System.out.println("Avis : " + this.avis);
+
+        
     }
 
 }
