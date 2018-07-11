@@ -39,5 +39,38 @@ public class Entretien_critere implements Serializable {
 
     @Column(name = "note")
     private String observation;   
+
+    public int getIdCategorie_critere() {
+        return idCategorie_critere;
+    }
+
+    public void setIdCategorie_critere(int idCategorie_critere) {
+        this.idCategorie_critere = idCategorie_critere;
+    }
+
+    public Critere getCritere() {
+        return critere;
+    }
+
+    public void setCritere(Critere critere) {
+        this.critere = critere;
+    }
+
+    public Entretien getEntretien() {
+        return entretien;
+    }
+
+    public void setEntretien(Entretien entretien) {
+        this.entretien = entretien;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+    
     
 }

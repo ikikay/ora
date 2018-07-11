@@ -2,6 +2,8 @@ package managers;
 
 import facades.CandidatFacade;
 import facades.EntretienFacade;
+import facades.Entretien_categorie_critereFacade;
+import facades.Entretien_critereFacade;
 import facades.ParcoursFacade;
 import facades.PromotionFacade;
 import java.io.Serializable;
@@ -10,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javabeans.Candidat;
 import javabeans.Entretien;
+import javabeans.Entretien_categorie_critere;
+import javabeans.Entretien_critere;
 import javabeans.Parcours;
 import javabeans.Promotion;
 import javax.annotation.PostConstruct;
@@ -32,8 +36,6 @@ import javax.validation.constraints.Size;
 public class FormulaireCandidature implements Serializable {
 
     private Candidat leCandidat;
-    private Entretien lEntretien;
-    private Parcours leParcours;
 
     /*
     Formulaire
@@ -61,7 +63,7 @@ public class FormulaireCandidature implements Serializable {
 
     @NotNull(message = "Champs 'Date de naissance' obligatoire")
     @Size(min = 8, max = 10, message = "Taille du champs 'Date de naissance' inccorect !")
-    private String dateDeNaissance; //TODO LocalDate
+    private String dateDeNaissance;
 
     @Size(min = 0, max = 14, message = "Taille du champs 'Téléphone fixe' inccorect !")
     private String tel;
@@ -166,13 +168,45 @@ public class FormulaireCandidature implements Serializable {
     @EJB
     private EntretienFacade entretienFacade;
 
+    private Entretien_categorie_critere unEntretientCategorieCritereToAdd;
+    @EJB
+    private Entretien_categorie_critereFacade entretienCategorieCritereFacade;
+
+    private Entretien_critere unEntretientCritereToAdd;
+    @EJB
+    private Entretien_critereFacade entretienCritereFacade;
+
     private Parcours unParcoursToAdd;
     @EJB
     private ParcoursFacade parcoursFacade;
 
     @PostConstruct
     public void init() {
+        // Pré remplissage des champs
+        this.nom = leCandidat.getNom();
+        this.prenom = leCandidat.getPrenom();
+        this.rue = leCandidat.getRue();
+        this.codePostal = leCandidat.getCodePostal();
+        this.ville = leCandidat.getVille();
+        this.dateDeNaissance = localDateToString(leCandidat.getDteNaissance());
+        this.tel = leCandidat.getTel();
+        this.portable = leCandidat.getPortable();
+        this.email = leCandidat.getEmail();
+        this.secuSocial = leCandidat.getSecuSocial();
+
+        this.permisB = leCandidat.getPermisB();
+        this.voiture = leCandidat.getVoiture();
+        this.permisA = leCandidat.getPermisA();
+        this.moto = leCandidat.getMoto();
+        this.scooter = leCandidat.getScooter();
+
+        // initialisation des champs
         ds1 = ds2 = ds3 = e1 = e2 = e3 = e4 = e5 = e6 = e7 = 1;
+    }
+
+    public String toFormulaireCandidature(Candidat unCandidat) {
+        leCandidat = unCandidat;
+        return "toFormulaireCandidature";
     }
 
     /*
@@ -184,22 +218,6 @@ public class FormulaireCandidature implements Serializable {
 
     public void setLeCandidat(Candidat leCandidat) {
         this.leCandidat = leCandidat;
-    }
-
-    public Entretien getlEntretien() {
-        return lEntretien;
-    }
-
-    public void setlEntretien(Entretien lEntretien) {
-        this.lEntretien = lEntretien;
-    }
-
-    public Parcours getLeParcours() {
-        return leParcours;
-    }
-
-    public void setLeParcours(Parcours leParcours) {
-        this.leParcours = leParcours;
     }
 
     public String getNom() {
@@ -317,9 +335,9 @@ public class FormulaireCandidature implements Serializable {
     public List<Promotion> getLesPromotions() {
         try {
             lesPromotions = promotionFacade.findAll();
-            
+
         } catch (EJBException ee) {
-           // return lesPromotions = new ArrayList<>();
+            // return lesPromotions = new ArrayList<>();
         }
         return lesPromotions;
     }
@@ -493,8 +511,8 @@ public class FormulaireCandidature implements Serializable {
      */
     public LocalDate stringToLocalDate(String unString) {
         try {
-            DateTimeFormatter formatterFormulaireCandidature = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate laDate = LocalDate.parse(unString, formatterFormulaireCandidature);
+            DateTimeFormatter formatterStringToDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate laDate = LocalDate.parse(unString, formatterStringToDate);
 
             return laDate;
         } catch (Exception e) {
@@ -502,25 +520,36 @@ public class FormulaireCandidature implements Serializable {
         }
     }
 
+    public String localDateToString(LocalDate uneDate) {
+        try {
+            DateTimeFormatter formatterDateToString = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String laDateFormate = uneDate.format(formatterDateToString);
+
+            return laDateFormate;
+        } catch (Exception e) {
+            return null; //TODO Trouvé quoi retourner ou retourner formulaire précédent.
+        }
+    }
+
     public void validationFormulaire() {
-        System.out.println("Nom : " + this.nom);
-        System.out.println("Prenom : " + this.prenom);
-        System.out.println("Rue : " + this.rue);
-        System.out.println("Code Postal : " + this.codePostal);
-        System.out.println("Ville : " + this.ville);
-        System.out.println("Date de naissance : " + stringToLocalDate(this.dateDeNaissance) + " : " + this.dateDeNaissance);
-        System.out.println("Téléphone : " + this.tel);
-        System.out.println("Portable : " + this.portable);
-        System.out.println("Email : " + this.email);
-        System.out.println("Sécurité Social : " + this.secuSocial);
-        System.out.println("Diplome le plus récent : " + this.actuelle);
-        System.out.println("Etablissement(et lieu) : " + this.etablissement);
-        System.out.println("Etat du diplome : " + " + note : " + this.diplome);
-        System.out.println("Permis voiture : " + this.permisB);
-        System.out.println("Voiture : " + this.voiture);
-        System.out.println("Permis Moto : " + this.permisA);
-        System.out.println("Moto : " + this.moto);
-        System.out.println("Scooter : " + this.scooter);
+        //System.out.println("Nom : " + this.nom);
+        //System.out.println("Prenom : " + this.prenom);
+        //System.out.println("Rue : " + this.rue);
+        //System.out.println("Code Postal : " + this.codePostal);
+        //System.out.println("Ville : " + this.ville);
+        //System.out.println("Date de naissance : " + stringToLocalDate(this.dateDeNaissance) + " : " + this.dateDeNaissance);
+        //System.out.println("Téléphone : " + this.tel);
+        //System.out.println("Portable : " + this.portable);
+        //System.out.println("Email : " + this.email);
+        //System.out.println("Sécurité Social : " + this.secuSocial);
+        //System.out.println("Diplome le plus récent : " + this.actuelle);
+        //System.out.println("Etablissement(et lieu) : " + this.etablissement);
+        //System.out.println("Etat du diplome : " + this.diplome + " + note : " + this.commentaire);
+        //System.out.println("Permis voiture : " + this.permisB);
+        //System.out.println("Voiture : " + this.voiture);
+        //System.out.println("Permis Moto : " + this.permisA);
+        //System.out.println("Moto : " + this.moto);
+        //System.out.println("Scooter : " + this.scooter);
         System.out.println("Matières générales : " + this.ds1);
         System.out.println("Matières techniques : " + this.ds2);
         System.out.println("Assiduité / Comportement : " + this.ds3);
@@ -536,7 +565,42 @@ public class FormulaireCandidature implements Serializable {
         System.out.println("Conclusion : " + this.conclusion);
         System.out.println("Avis : " + this.avis);
 
+        leCandidat.setNom(this.nom);
+        leCandidat.setPrenom(this.prenom);
+        leCandidat.setCodePostal(this.codePostal);
+        leCandidat.setVille(this.ville);
+        leCandidat.setRue(this.rue);
+        leCandidat.setDteNaissance(stringToLocalDate(this.dateDeNaissance));
+        leCandidat.setTel(this.tel);
+        leCandidat.setPortable(this.portable);
+        leCandidat.setEmail(this.email);
+        leCandidat.setSecuSocial(this.secuSocial);
+        leCandidat.setPermisA(this.permisA);
+        leCandidat.setPermisB(this.permisB);
+        leCandidat.setVoiture(this.voiture);
+        leCandidat.setMoto(this.moto);
+        leCandidat.setScooter(this.scooter);
         
+        unParcoursToAdd.setActuelle(this.actuelle);
+        unParcoursToAdd.setEtablissement(this.etablissement);
+        unParcoursToAdd.setDiplome(this.diplome);
+        unParcoursToAdd.setCommentaire(this.commentaire);
+        
+        unEntretientToAdd.setAvis(this.avis);
+        unEntretientToAdd.setDateEntretien(LocalDate.now());
+        unEntretientToAdd.setParcours(unParcoursToAdd);
+        unEntretientToAdd.setCandidat(leCandidat);
+        unEntretientToAdd.setPromotion(this.projet);
+        //unEntretientToAdd.setIs_apprenti(?);
+        
+        //unEntretientCategorieCritereToAdd.setCategorieCritere(?);
+        unEntretientCategorieCritereToAdd.setEntretien(unEntretientToAdd);
+        //unEntretientCategorieCritereToAdd.setObservation(this.observationEntretien);
+        
+        //unEntretientCritereToAdd.setCritere(?);
+        unEntretientCritereToAdd.setEntretien(unEntretientToAdd);
+        //unEntretientCritereToAdd.setObservation(this.observationScolaire);
+       
     }
 
 }
