@@ -46,6 +46,9 @@ public class Entretien implements Serializable {
     @OneToOne(optional = false)
     @JoinColumn(name = "id_Candidat", unique = false, nullable = false, updatable = true)
     private Candidat candidat;
+    
+    @Column(name = "is_apprenti")
+    private Boolean is_apprenti;
 
 
     public Entretien() {
