@@ -35,14 +35,14 @@ public class Entretien_categorie_critere {
     @JoinColumn(name = "fk_entretien")
     private Entretien entretien;
 
-    @Column(name = "libelle")
-    private String libelle;
+    @Column(name = "observation")
+    private String observation;
 
-    public Entretien_categorie_critere(int idCategorie_critere, Categorie_critere categorieCritere, Entretien entretien, String libelle) {
+    public Entretien_categorie_critere(int idCategorie_critere, Categorie_critere categorieCritere, Entretien entretien, String observation) {
         this.idCategorie_critere = idCategorie_critere;
         this.categorieCritere = categorieCritere;
         this.entretien = entretien;
-        this.libelle = libelle;
+        this.observation = observation;
     }
 
     public Entretien_categorie_critere() {
@@ -73,12 +73,12 @@ public class Entretien_categorie_critere {
         this.entretien = entretien;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getObservation() {
+        return observation;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 
 }

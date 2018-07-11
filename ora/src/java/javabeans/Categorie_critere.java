@@ -27,10 +27,10 @@ public class Categorie_critere implements Serializable {
     private static final long serialVersionUID = -5892169641074303723L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCategorie_critere", nullable = false, length = 255)
+    @Column(name = "id_categorie_critere", nullable = false, length = 255)
     private int idCategorie_critere;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorieCritere")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorie_critere")
     private List<Critere> critere;
 
     @Column(name = "libelle")

@@ -44,7 +44,7 @@ public class Entretien implements Serializable {
     private Parcours parcours;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "idCandidat", unique = false, nullable = false, updatable = true)
+    @JoinColumn(name = "id_Candidat", unique = false, nullable = false, updatable = true)
     private Candidat candidat;
 
     @ManyToMany(mappedBy = "entretien")

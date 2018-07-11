@@ -7,12 +7,18 @@ package javabeans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import tools.LocalDateAttributeConverter;
 
@@ -27,28 +33,28 @@ public class Candidat implements Serializable {
     private static final long serialVersionUID = -5892169641074303723L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCandidat", nullable = false, length = 255)
+    @Column(name = "id_candidat", nullable = false, length = 255)
     private int idCandidat;
 
     @Column(name = "nom", nullable = false, length = 255)
     private String nom;
-
+    
     @Column(name = "prenom", nullable = false, length = 255)
     private String prenom;
-
-    @Column(name = "rue", nullable = false, length = 255)
-    private String rue;
-
-    @Column(name = "codePostal", nullable = false, length = 5)
+    
+    @Column(name = "code_postal", nullable = false, length = 5)
     private String codePostal;
-
+    
     @Column(name = "ville", nullable = false, length = 255)
     private String ville;
-
-    @Column(name = "dteNaissance", nullable = false, length = 255)
+    
+    @Column(name = "rue", nullable = false, length = 255)
+    private String rue;
+    
+    @Column(name = "dte_naissance", nullable = false, length = 255)
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dteNaissance;
-
+    
     @Column(name = "tel", nullable = false, length = 10)
     private String tel;
 
@@ -58,27 +64,50 @@ public class Candidat implements Serializable {
     @Column(name = "email", nullable = false, length = 255)
     private String email;
 
-    @Column(name = "secuSocial", nullable = false, length = 15)
+    @Column(name = "secu_social", nullable = false, length = 15)
     private String secuSocial;
 
-    @Column(name = "permisA")
+    @Column(name = "permis_a")
     private Boolean permisA;
 
-    @Column(name = "permisB")
-    private Boolean permisB;
+    @Column(name = "permis_b")
+    private Boolean permisB;    
 
     @Column(name = "voiture")
-    private Boolean voiture;
-
+    private Boolean voiture; 
+    
     @Column(name = "moto")
-    private Boolean moto;
+    private Boolean moto;   
 
     @Column(name = "scooter")
-    private Boolean scooter;
-
-    public Candidat() {
+    private Boolean scooter;   
+   
+    
+   /* @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Promotion> promotions = new HashSet<Promotion>();
+    
+    
+    public Set<Promotion> getPromotions() {
+        return promotions;
     }
 
+    public void setPromotions(Set<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+    
+    public void addPromotion(Promotion promotion) {
+        promotions.add(promotion);
+       promotion.getCandidats().add(this);
+    }
+ 
+    public void removePromotion(Promotion promotion) {
+        promotions.remove(promotion);
+        promotion.getCandidats().remove(this);
+    }*/
+    
+    public Candidat() {
+    }    
+    
     public Candidat(int idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter) {
         this.idCandidat = idCandidat;
         this.nom = nom;
@@ -225,5 +254,28 @@ public class Candidat implements Serializable {
     public void setScooter(Boolean scooter) {
         this.scooter = scooter;
     }
+    
+      /* @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+      {
+         return true;
+      }
+      if (!(o instanceof Promotion))
+      {
+         return false;
+      }
+      Candidat cand = (Candidat) o;
+      return Objects.equals(getIdCandidat(), cand.getIdCandidat());
+   }*/
 
+   @Override
+   public int hashCode()
+   {
+      return Objects.hash(getIdCandidat());
+   }
+
+    
+    
 }

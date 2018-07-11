@@ -31,7 +31,7 @@ public class Critere implements Serializable {
     private static final long serialVersionUID = -5892169641074303723L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCritere", nullable = false, length = 255)
+    @Column(name = "id_critere", nullable = false, length = 255)
     private int idCandidat;
 
     @Column(name = "libelle")
@@ -50,7 +50,7 @@ public class Critere implements Serializable {
     })
     @JoinTable(
             name = "entretien_critere",
-            joinColumns = @JoinColumn(name = "idCritere", referencedColumnName = "idCritere"),
+            joinColumns = @JoinColumn(name = "id_critere", referencedColumnName = "id_critere"),
             inverseJoinColumns = @JoinColumn(name = "id_Entretien", referencedColumnName = "id_Entretien"))
     private List<Entretien> entretien = new ArrayList<Entretien>();
 
