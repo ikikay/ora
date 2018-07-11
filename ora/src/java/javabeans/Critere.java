@@ -6,17 +6,12 @@
 package javabeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -31,7 +26,7 @@ public class Critere implements Serializable {
     private static final long serialVersionUID = -5892169641074303723L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCritere", nullable = false, length = 255)
+    @Column(name = "id_critere", nullable = false, length = 255)
     private int idCandidat;
 
     @Column(name = "libelle")
@@ -43,16 +38,6 @@ public class Critere implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fk_categorieCritere")
     private Categorie_critere categorieCritere;
-
-    @ManyToMany(cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    })
-    @JoinTable(
-            name = "entretien_critere",
-            joinColumns = @JoinColumn(name = "idCritere", referencedColumnName = "idCritere"),
-            inverseJoinColumns = @JoinColumn(name = "id_Entretien", referencedColumnName = "id_Entretien"))
-    private List<Entretien> entretien = new ArrayList<Entretien>();
 
     public Critere() {
 
@@ -95,16 +80,6 @@ public class Critere implements Serializable {
 
     public void setCategorieCritere(Categorie_critere categorieCritere) {
         this.categorieCritere = categorieCritere;
-    }
-
-    public List<Entretien> getEntretien() {
-        return entretien;
-    }
-
-    public void setEntretien(List<Entretien> entretien) {
-        this.entretien = entretien;
-    }
-    
-    
+    } 
 
 }

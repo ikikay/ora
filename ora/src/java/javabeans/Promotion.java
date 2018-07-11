@@ -6,14 +6,16 @@
 package javabeans;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,9 +30,20 @@ public class Promotion implements Serializable {
     @Column(name = "titre_promotion")
     private String titre;
 
+    @ManyToOne
+    private User user;
 
-//   @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
-//   private List<Candidat> candidats;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
+    private List<Entretien> entretiens;
+
+    public List<Entretien> getEntretiens() {
+        return entretiens;
+    }
+
+    public void setEntretiens(List<Entretien> entretiens) {
+        this.entretiens = entretiens;
+    }
+
     public Promotion() {
     }
 
@@ -55,16 +68,14 @@ public class Promotion implements Serializable {
         this.titre = titre;
     }
 
-//
-//   public List<Candidat> getCommentaires()
-//   {
-//      return candidats;
-//   }
-//
-//   public void setCommentaires(List<Candidat> commentaires)
-//   {
-//      this.candidats = commentaires;
-//   }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,10 +91,5 @@ public class Promotion implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
-    }
-
-    @Override
-    public String toString() {
-        return this.titre;
     }
 }

@@ -7,8 +7,6 @@ package javabeans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -16,7 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import tools.LocalDateAttributeConverter;
@@ -44,21 +42,43 @@ public class Entretien implements Serializable {
     private Parcours parcours;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "idCandidat", unique = false, nullable = false, updatable = true)
+    @JoinColumn(name = "id_Candidat", unique = false, nullable = false, updatable = true)
     private Candidat candidat;
+    
+    @ManyToOne
+    @JoinColumn(name = "fk_promotion")
+    private Promotion promotion;
 
-    @ManyToMany(mappedBy = "entretien")
-    private List<Critere> critere = new ArrayList<Critere>();
+    @Column(name = "is_apprenti")
+    private Boolean is_apprenti;
 
     public Entretien() {
     }
 
-    public Entretien(int id, String avis, LocalDate dateEntretien, Parcours parcours, Candidat candidat) {
+    public Entretien(int id, String avis, LocalDate dateEntretien, Parcours parcours, Candidat candidat, Promotion promotion, Boolean is_apprenti) {
         this.id = id;
         this.avis = avis;
         this.dateEntretien = dateEntretien;
         this.parcours = parcours;
         this.candidat = candidat;
+        this.promotion = promotion;
+        this.is_apprenti = is_apprenti;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
+    }
+
+    public Boolean getIs_apprenti() {
+        return is_apprenti;
+    }
+
+    public void setIs_apprenti(Boolean is_apprenti) {
+        this.is_apprenti = is_apprenti;
     }
 
     public int getId() {
@@ -99,14 +119,6 @@ public class Entretien implements Serializable {
 
     public void setCandidat(Candidat candidat) {
         this.candidat = candidat;
-    }
-
-    public List<Critere> getCritere() {
-        return critere;
-    }
-
-    public void setCritere(List<Critere> critere) {
-        this.critere = critere;
     }
 
 }
