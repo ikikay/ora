@@ -47,8 +47,6 @@ public class Entretien implements Serializable {
     @JoinColumn(name = "id_Candidat", unique = false, nullable = false, updatable = true)
     private Candidat candidat;
 
-    @ManyToMany(mappedBy = "entretien")
-    private List<Critere> critere = new ArrayList<Critere>();
 
     public Entretien() {
     }
@@ -99,14 +97,6 @@ public class Entretien implements Serializable {
 
     public void setCandidat(Candidat candidat) {
         this.candidat = candidat;
-    }
-
-    public List<Critere> getCritere() {
-        return critere;
-    }
-
-    public void setCritere(List<Critere> critere) {
-        this.critere = critere;
     }
 
 }

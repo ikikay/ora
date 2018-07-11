@@ -30,10 +30,10 @@ public class Promotion implements Serializable {
     @Column(name = "titre_promotion")
     private String titre;
 
-    @ManyToMany(mappedBy = "promotions", fetch = FetchType.LAZY)
+    /*@ManyToMany(mappedBy = "promotions", fetch = FetchType.LAZY)
     private Set<Candidat> candidats = new HashSet<Candidat>();
 
-    /*public void addCandidat(Candidat candidat) {
+    public void addCandidat(Candidat candidat) {
         candidats.add(candidat);
         candidat.getPromotions().add(this);
     }
@@ -43,13 +43,13 @@ public class Promotion implements Serializable {
         candidat.getPromotions().remove(this);
     }*/
 
-    public Set<Candidat> getCandidats() {
-        return candidats;
-    }
-
-    public void setCandidats(Set<Candidat> candidats) {
-        this.candidats = candidats;
-    }
+//    public Set<Candidat> getCandidats() {
+//        return candidats;
+//    }
+//
+//    public void setCandidats(Set<Candidat> candidats) {
+//        this.candidats = candidats;
+//    }
 
 //   @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotion")
 //   private List<Candidat> candidats;
