@@ -1,13 +1,24 @@
 package managers;
 
+import facades.CandidatFacade;
+import facades.EntretienFacade;
+import facades.ParcoursFacade;
+import facades.PromotionFacade;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.ArrayList;
 import javabeans.Candidat;
 import javabeans.Entretien;
 import javabeans.Parcours;
+import javabeans.Promotion;
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -24,117 +35,141 @@ public class FormulaireCandidature implements Serializable {
     private Entretien lEntretien;
     private Parcours leParcours;
 
+    /*
+    Formulaire
+     */
     //Candidat
-    @NotNull(message="Champs 'Nom' obligatoire")
-    @Size(min=2, max=255, message = "Taille du champs 'Nom' inccorect !")
+    @NotNull(message = "Champs 'Nom' obligatoire")
+    @Size(min = 2, max = 255, message = "Taille du champs 'Nom' inccorect !")
     private String nom;
-    
-    @NotNull(message="Champs 'Prénom' obligatoire")
-    @Size(min=2, max=255, message = "Taille du champs 'Prénom' inccorect !")
+
+    @NotNull(message = "Champs 'Prénom' obligatoire")
+    @Size(min = 2, max = 255, message = "Taille du champs 'Prénom' inccorect !")
     private String prenom;
-    
-    @NotNull(message="Champs 'Rue' obligatoire")
-    @Size(min=2, max=255, message = "Taille du champs 'Rue' inccorect !")
+
+    @NotNull(message = "Champs 'Rue' obligatoire")
+    @Size(min = 2, max = 255, message = "Taille du champs 'Rue' inccorect !")
     private String rue;
-    
-    @NotNull(message="Champs 'Code Postal' obligatoire")
-    @Size(min=5, max=5, message = "Taille du champs 'Code Postal' inccorect !")
+
+    @NotNull(message = "Champs 'Code Postal' obligatoire")
+    @Size(min = 5, max = 6, message = "Taille du champs 'Code Postal' inccorect !")
     private String codePostal;
-    
-    @NotNull(message="Champs 'Ville' obligatoire")
-    @Size(min=2, max=255, message = "Taille du champs 'Ville' inccorect !")
+
+    @NotNull(message = "Champs 'Ville' obligatoire")
+    @Size(min = 2, max = 255, message = "Taille du champs 'Ville' inccorect !")
     private String ville;
-    
-    @NotNull(message="Champs 'Date de naissance' obligatoire")
-    @Size(min=8, max=10, message = "Taille du champs 'Date de naissance' inccorect !")
+
+    @NotNull(message = "Champs 'Date de naissance' obligatoire")
+    @Size(min = 8, max = 10, message = "Taille du champs 'Date de naissance' inccorect !")
     private String dateDeNaissance; //TODO LocalDate
-    
-    @Size(min=0, max=10, message = "Taille du champs 'Téléphone fixe' inccorect !")
+
+    @Size(min = 0, max = 14, message = "Taille du champs 'Téléphone fixe' inccorect !")
     private String tel;
-    
-    @Size(min=0, max=10, message = "Taille du champs 'Téléphone Portable' inccorect !")
+
+    @NotNull(message = "Champs 'Téléphone Portable' obligatoire")
+    @Size(min = 0, max = 14, message = "Taille du champs 'Téléphone Portable' inccorect !")
     private String portable;
-    
-    @NotNull(message="Champs 'E-Mail' obligatoire")
-    @Size(min=2, max=255, message = "Taille du champs 'E-Mail' inccorect !")
-    @Pattern(regexp=".*@*\\..{2,3}", message ="E-Mail inccorrect !")
+
+    @NotNull(message = "Champs 'E-Mail' obligatoire")
+    @Size(min = 2, max = 255, message = "Taille du champs 'E-Mail' inccorect !")
+    @Pattern(regexp = ".*@*\\..{2,3}", message = "E-Mail inccorrect !")
     private String email;
-    
-    @Size(min=15, max=15, message = "Taille du champs 'Sécurité Social' inccorect !")
+
     private String secuSocial;
-    
+
     //Projet
-    private String projet; // TODO OBJET
-    
+    private Promotion projet;
+
     //Etudes/ Situation professionnelle
+    @NotNull(message = "Champs 'Diplome le plus récent' obligatoire")
+    @Size(min = 3, max = 255, message = "Taille du champs 'Diplome le plus récent' inccorect !")
     private String actuelle;
+
+    @NotNull(message = "Champs 'Etablissement (et lieu)' obligatoire")
+    @Size(min = 3, max = 255, message = "Taille du champs 'Etablissement (et lieu)' inccorect !")
     private String etablissement;
-    private String diplome;
+
+    @NotNull(message = "Champs 'Etat du diplome' obligatoire")
+    private Boolean diplome;
+
     private String commentaire;
+
     //Mobilité
-    private Boolean permisB;
-    private Boolean voiture;
-    private Boolean permisA;
-    private Boolean moto;
-    private Boolean scooter;
+    private Boolean permisB = false;
+    private Boolean voiture = false;
+    private Boolean permisA = false;
+    private Boolean moto = false;
+    private Boolean scooter = false;
     //Dossier Scolaire
-    private String ds1;
-    private String ds2;
-    private String ds3;
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Matières générales'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Matières générales'")
+    private int ds1;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Matières techniques'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Matières techniques'")
+    private int ds2;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Assiduité / Comportement'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Assiduité / Comportement'")
+    private int ds3;
+
     private String observationScolaire;
     //Entretien
-    private String e1;
-    private String e2;
-    private String e3;
-    private String e4;
-    private String e5;
-    private String e6;
-    private String e7;
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Ouverture d'esprit'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Ouverture d'esprit'")
+    private int e1;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Aisance relationnelle, confiance en soi'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Aisance relationnelle, confiance en soi'")
+    private int e2;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Choix du métier / connaissance de la formation'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Choix du métier / connaissance de la formation'")
+    private int e3;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Connaissance de l'apprentissage et de ses contraintes'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Connaissance de l'apprentissage et de ses contraintes'")
+    private int e4;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Degré de motivation'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Degré de motivation'")
+    private int e5;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'pproche pour la recherche d'entreprise'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'pproche pour la recherche d'entreprise'")
+    private int e6;
+
+    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Prédispositions techniques'")
+    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Prédispositions techniques'")
+    private int e7;
+
     private String observationEntretien;
     //Conclusion
     private String conclusion;
     private String avis;
 
-    private boolean visibiliteVoiture = false;
-    private boolean visibilitePermisMoto = true;
-    private boolean visibiliteMoto = false;
-    private boolean visibiliteScooter = false;
+    /*
+    Objets pour base
+     */
+    private List<Promotion> lesPromotions;
+    @EJB
+    private PromotionFacade promotionFacade;
+
+    private Candidat leCadidatToEdit;
+    @EJB
+    private CandidatFacade candidatFacade;
+    
+    private Entretien unEntretientToAdd;
+    @EJB
+    private EntretienFacade entretienFacade;
+    
+    private Parcours unParcoursToAdd;
+    @EJB
+    private ParcoursFacade parcoursFacade;
 
     /*
     Getters et Setters
      */
-    public boolean isVisibiliteVoiture() {
-        return visibiliteVoiture;
-    }
-
-    public void setVisibiliteVoiture(boolean visibiliteVoiture) {
-        this.visibiliteVoiture = visibiliteVoiture;
-    }
-
-    public boolean isVisibilitePermisMoto() {
-        return visibilitePermisMoto;
-    }
-
-    public void setVisibilitePermisMoto(boolean visibilitePermisMoto) {
-        this.visibilitePermisMoto = visibilitePermisMoto;
-    }
-
-    public boolean isVisibiliteMoto() {
-        return visibiliteMoto;
-    }
-
-    public void setVisibiliteMoto(boolean visibiliteMoto) {
-        this.visibiliteMoto = visibiliteMoto;
-    }
-
-    public boolean isVisibiliteScooter() {
-        return visibiliteScooter;
-    }
-
-    public void setVisibiliteScooter(boolean visibiliteScooter) {
-        this.visibiliteScooter = visibiliteScooter;
-    }
-
     public Candidat getLeCandidat() {
         return leCandidat;
     }
@@ -229,7 +264,7 @@ public class FormulaireCandidature implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }    
+    }
 
     public String getSecuSocial() {
         return secuSocial;
@@ -239,11 +274,11 @@ public class FormulaireCandidature implements Serializable {
         this.secuSocial = secuSocial;
     }
 
-    public String getProjet() {
+    public Promotion getProjet() {
         return projet;
     }
 
-    public void setProjet(String projet) {
+    public void setProjet(Promotion projet) {
         this.projet = projet;
     }
 
@@ -263,12 +298,25 @@ public class FormulaireCandidature implements Serializable {
         this.etablissement = etablissement;
     }
 
-    public String getDiplome() {
+    public Boolean getDiplome() {
         return diplome;
     }
 
-    public void setDiplome(String diplome) {
+    public void setDiplome(Boolean diplome) {
         this.diplome = diplome;
+    }
+
+    public List<Promotion> getLesPromotions() {
+        try {
+            lesPromotions = promotionFacade.findAll();
+            return lesPromotions;
+        } catch (EJBException ee) {
+            return lesPromotions = new ArrayList<>();
+        }
+    }
+
+    public void setLesPromotions(List<Promotion> lesPromotions) {
+        this.lesPromotions = lesPromotions;
     }
 
     public String getCommentaire() {
@@ -319,27 +367,27 @@ public class FormulaireCandidature implements Serializable {
         this.scooter = scooter;
     }
 
-    public String getDs1() {
+    public int getDs1() {
         return ds1;
     }
 
-    public void setDs1(String ds1) {
+    public void setDs1(int ds1) {
         this.ds1 = ds1;
     }
 
-    public String getDs2() {
+    public int getDs2() {
         return ds2;
     }
 
-    public void setDs2(String ds2) {
+    public void setDs2(int ds2) {
         this.ds2 = ds2;
     }
 
-    public String getDs3() {
+    public int getDs3() {
         return ds3;
     }
 
-    public void setDs3(String ds3) {
+    public void setDs3(int ds3) {
         this.ds3 = ds3;
     }
 
@@ -351,59 +399,59 @@ public class FormulaireCandidature implements Serializable {
         this.observationScolaire = observationScolaire;
     }
 
-    public String getE1() {
+    public int getE1() {
         return e1;
     }
 
-    public void setE1(String e1) {
+    public void setE1(int e1) {
         this.e1 = e1;
     }
 
-    public String getE2() {
+    public int getE2() {
         return e2;
     }
 
-    public void setE2(String e2) {
+    public void setE2(int e2) {
         this.e2 = e2;
     }
 
-    public String getE3() {
+    public int getE3() {
         return e3;
     }
 
-    public void setE3(String e3) {
+    public void setE3(int e3) {
         this.e3 = e3;
     }
 
-    public String getE4() {
+    public int getE4() {
         return e4;
     }
 
-    public void setE4(String e4) {
+    public void setE4(int e4) {
         this.e4 = e4;
     }
 
-    public String getE5() {
+    public int getE5() {
         return e5;
     }
 
-    public void setE5(String e5) {
+    public void setE5(int e5) {
         this.e5 = e5;
     }
 
-    public String getE6() {
+    public int getE6() {
         return e6;
     }
 
-    public void setE6(String e6) {
+    public void setE6(int e6) {
         this.e6 = e6;
     }
 
-    public String getE7() {
+    public int getE7() {
         return e7;
     }
 
-    public void setE7(String e7) {
+    public void setE7(int e7) {
         this.e7 = e7;
     }
 
@@ -429,81 +477,23 @@ public class FormulaireCandidature implements Serializable {
 
     public void setAvis(String avis) {
         this.avis = avis;
-    }  
-
-    /*
-    Fonctions switch boolean
-     */
-    public void inverseVisibiliteVoiture() {
-        if (visibiliteVoiture == true) {
-            visibiliteVoiture = false;
-        } else if (visibiliteVoiture == false) {
-            visibiliteVoiture = true;
-        }
-    }
-
-    public void inverseVisibilitePermisMoto() {
-        if (visibilitePermisMoto == true) {
-            visibilitePermisMoto = false;
-        } else if (visibilitePermisMoto == false) {
-            visibilitePermisMoto = true;
-        }
-    }
-
-    public void inverseVisibiliteMoto() {
-        if (visibiliteMoto == true) {
-            visibiliteMoto = false;
-        } else if (visibiliteMoto == false) {
-            visibiliteMoto = true;
-        }
-    }
-
-    public void inverseVisibiliteScooter() {
-        if (visibiliteScooter == true) {
-            visibiliteScooter = false;
-        } else if (visibiliteScooter == false) {
-            visibiliteScooter = true;
-        }
-    }
-
-    /*
-    Toggle buttons mobilité
-     */
-    public void clickOnPermisVoiture() {
-        System.out.println("Click on Permis Voiture");
-        inverseVisibiliteVoiture();
-        inverseVisibilitePermisMoto();
-
-    }
-
-    public void clickOnVoiture() {
-        System.out.println("Click on  Voiture");
-        inverseVisibilitePermisMoto();
-    }
-
-    public void clickOnPermisMoto() {
-        System.out.println("Click on Permis Moto");
-        inverseVisibiliteMoto();
-        inverseVisibiliteScooter();
-    }
-
-    public void clickOnMoto() {
-        System.out.println("Click on Moto");
-        inverseVisibiliteScooter();
     }
 
     /*
     Fonctions 
      */
     public LocalDate stringToLocalDate(String unString) {
-        unString = "28/09/16";
-        DateTimeFormatter formatterFormulaireCandidature = DateTimeFormatter.ofPattern("dd/MM/yy");
-        LocalDate laDate = LocalDate.parse(unString, formatterFormulaireCandidature);
+        try {
+            DateTimeFormatter formatterFormulaireCandidature = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate laDate = LocalDate.parse(unString, formatterFormulaireCandidature);
 
-        return laDate;
+            return laDate;
+        } catch (Exception e) {
+            return null; //TODO Trouvé quoi retourner ou retourner formulaire précédent.
+        }
     }
-    
-    public void testLudovic(){
+
+    public void testLudovic() {
         System.out.println("Nom : " + this.nom);
         System.out.println("Prenom : " + this.prenom);
         System.out.println("Rue : " + this.rue);
@@ -514,6 +504,28 @@ public class FormulaireCandidature implements Serializable {
         System.out.println("Portable : " + this.portable);
         System.out.println("Email : " + this.email);
         System.out.println("Sécurité Social : " + this.secuSocial);
+        System.out.println("Diplome le plus récent : " + this.actuelle);
+        System.out.println("Etablissement(et lieu) : " + this.etablissement);
+        System.out.println("Etat du diplome : " + " + note : " + this.diplome);
+        System.out.println("Permis voiture : " + this.permisB);
+        System.out.println("Voiture : " + this.voiture);
+        System.out.println("Permis Moto : " + this.permisA);
+        System.out.println("Moto : " + this.moto);
+        System.out.println("Scooter : " + this.scooter);
+        System.out.println("Matières générales : " + this.ds1);
+        System.out.println("Matières techniques : " + this.ds2);
+        System.out.println("Assiduité / Comportement : " + this.ds3);
+        System.out.println("Observation Dossier Scolaire : " + this.observationScolaire);
+        System.out.println("Ouverture d'esprit : " + this.e1);
+        System.out.println("Aisance relationelle, confiance en soi : " + this.e2);
+        System.out.println("Choix du métier / connaissance de la formation : " + this.e3);
+        System.out.println("Connaissance de l'apprentissage et de ses contraintes : " + this.e4);
+        System.out.println("Degré de motivation : " + this.e5);
+        System.out.println("Approche pour la recherche d'entreprise : " + this.e6);
+        System.out.println("Prédispositions techniques : " + this.e7);
+        System.out.println("Observation Entretien : " + this.observationEntretien);
+        System.out.println("Conclusion : " + this.conclusion);
+        System.out.println("Avis : " + this.avis);
     }
 
 }
