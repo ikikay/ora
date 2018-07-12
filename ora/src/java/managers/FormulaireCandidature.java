@@ -35,7 +35,7 @@ import javax.validation.constraints.Size;
 @SessionScoped
 public class FormulaireCandidature implements Serializable {
 
-    private Candidat leCandidat;
+    private Entretien entretien;
 
     /*
     Formulaire
@@ -183,32 +183,32 @@ public class FormulaireCandidature implements Serializable {
 
     @PostConstruct
     public void init() {
-        if (leCandidat != null) {
+        if (entretien.getCandidat() != null) {
             // Pré remplissage des champs
-            this.nom = leCandidat.getNom();
-            this.prenom = leCandidat.getPrenom();
-            this.rue = leCandidat.getRue();
-            this.codePostal = leCandidat.getCodePostal();
-            this.ville = leCandidat.getVille();
-            this.dateDeNaissance = localDateToString(leCandidat.getDteNaissance());
-            this.tel = leCandidat.getTel();
-            this.portable = leCandidat.getPortable();
-            this.email = leCandidat.getEmail();
-            this.secuSocial = leCandidat.getSecuSocial();
+            this.nom = entretien.getCandidat().getNom();
+            this.prenom = entretien.getCandidat().getPrenom();
+            this.rue = entretien.getCandidat().getRue();
+            this.codePostal = entretien.getCandidat().getCodePostal();
+            this.ville = entretien.getCandidat().getVille();
+            this.dateDeNaissance = localDateToString(entretien.getCandidat().getDteNaissance());
+            this.tel = entretien.getCandidat().getTel();
+            this.portable = entretien.getCandidat().getPortable();
+            this.email = entretien.getCandidat().getEmail();
+            this.secuSocial = entretien.getCandidat().getSecuSocial();
 
-            this.permisB = leCandidat.getPermisB();
-            this.voiture = leCandidat.getVoiture();
-            this.permisA = leCandidat.getPermisA();
-            this.moto = leCandidat.getMoto();
-            this.scooter = leCandidat.getScooter();
+            this.permisB = entretien.getCandidat().getPermisB();
+            this.voiture = entretien.getCandidat().getVoiture();
+            this.permisA = entretien.getCandidat().getPermisA();
+            this.moto = entretien.getCandidat().getMoto();
+            this.scooter = entretien.getCandidat().getScooter();
         }
 
         // initialisation des champs
         ds1 = ds2 = ds3 = e1 = e2 = e3 = e4 = e5 = e6 = e7 = 1;
     }
 
-    public String toFormulaireCandidature(Candidat unCandidat) {
-        leCandidat = unCandidat;
+    public String toFormulaireCandidature(Entretien unEntretien) {
+        entretien = unEntretien;
         init();
         return "toFormulaireCandidature";
     }
@@ -216,12 +216,12 @@ public class FormulaireCandidature implements Serializable {
     /*
     Getters et Setters
      */
-    public Candidat getLeCandidat() {
-        return leCandidat;
+    public Entretien getEntretien() {
+        return entretien;
     }
 
-    public void setLeCandidat(Candidat leCandidat) {
-        this.leCandidat = leCandidat;
+    public void setEntretien(Entretien entretien) {
+        this.entretien = entretien;
     }
 
     public String getNom() {
@@ -575,33 +575,31 @@ public class FormulaireCandidature implements Serializable {
         unParcoursToAdd.setCommentaire(this.commentaire);
 
         unEntretientToAdd.setAvis(this.avis);
-        unEntretientToAdd.setConclusion(this.conclusion);        
+        unEntretientToAdd.setConclusion(this.conclusion);
         unEntretientToAdd.setDateEntretien(LocalDate.now());
         unEntretientToAdd.setParcours(unParcoursToAdd);
-        unEntretientToAdd.setCandidat(leCandidat);
+        unEntretientToAdd.setCandidat(entretien.getCandidat());
         //ENTRETIENSCRITERES
         //CATEGORIESCRITERES
         unEntretientToAdd.setPromotion(this.projet);
         unEntretientToAdd.setIs_apprenti(false);
 
-        leCandidat.setNom(this.nom);
-        leCandidat.setPrenom(this.prenom);
-        leCandidat.setCodePostal(this.codePostal);
-        leCandidat.setVille(this.ville);
-        leCandidat.setRue(this.rue);
-        leCandidat.setDteNaissance(stringToLocalDate(this.dateDeNaissance));
-        leCandidat.setTel(this.tel);
-        leCandidat.setPortable(this.portable);
-        leCandidat.setEmail(this.email);
-        leCandidat.setSecuSocial(this.secuSocial);
-        leCandidat.setPermisA(this.permisA);
-        leCandidat.setPermisB(this.permisB);
-        leCandidat.setVoiture(this.voiture);
-        leCandidat.setMoto(this.moto);
-        leCandidat.setScooter(this.scooter);
-        leCandidat.getLesEntretiens().add(unEntretientToAdd);
-
-
+        entretien.getCandidat().setNom(this.nom);
+        entretien.getCandidat().setPrenom(this.prenom);
+        entretien.getCandidat().setCodePostal(this.codePostal);
+        entretien.getCandidat().setVille(this.ville);
+        entretien.getCandidat().setRue(this.rue);
+        entretien.getCandidat().setDteNaissance(stringToLocalDate(this.dateDeNaissance));
+        entretien.getCandidat().setTel(this.tel);
+        entretien.getCandidat().setPortable(this.portable);
+        entretien.getCandidat().setEmail(this.email);
+        entretien.getCandidat().setSecuSocial(this.secuSocial);
+        entretien.getCandidat().setPermisA(this.permisA);
+        entretien.getCandidat().setPermisB(this.permisB);
+        entretien.getCandidat().setVoiture(this.voiture);
+        entretien.getCandidat().setMoto(this.moto);
+        entretien.getCandidat().setScooter(this.scooter);
+        entretien.getCandidat().getLesEntretiens().add(unEntretientToAdd);
 
     }
 

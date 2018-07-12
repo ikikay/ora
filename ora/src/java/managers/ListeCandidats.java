@@ -35,6 +35,8 @@ import javax.validation.constraints.NotNull;
 public class ListeCandidats implements Serializable {
 
     private List<Candidat> lesCandidats;
+    private List<Entretien> lesEntretiens;
+
     private Candidat candidat;
     private Candidat candidatToAdd;
     private Candidat candidatToEdit;
@@ -178,6 +180,20 @@ public class ListeCandidats implements Serializable {
 
     public void setEntretienToAdd(Entretien entretienToAdd) {
         this.entretienToAdd = entretienToAdd;
+    }
+
+    public List<Entretien> getLesEntretiens() {
+        try {
+            lesEntretiens = entretienFacade.findAll();
+
+        } catch (EJBException ee) {
+            // return lesEntretiens = new ArrayList<>();
+        }
+        return lesEntretiens;
+    }
+
+    public void setLesEntretiens(List<Entretien> lesEntretiens) {
+        this.lesEntretiens = lesEntretiens;
     }
 
 }

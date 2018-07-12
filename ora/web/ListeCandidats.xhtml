@@ -33,38 +33,38 @@
                 </h:panelGrid>
             </p:overlayPanel>
         </h:form>
-        <h:form id="showCandidatsForm">
-            <p:dataTable var="unCandidat" value="#{listeCandidats.lesCandidats}" widgetVar="candidatsTable"
-                         emptyMessage="Aucun candidat n'a été trouvé">
+        <h:form id="showEntretiensForm">
+            <p:dataTable var="unEntretien" value="#{listeCandidats.lesEntretiens}" widgetVar="entretiensTable"
+                         emptyMessage="Aucun Entretien n'a été trouvé">
 
                 <f:facet name="header">
                     <p:outputPanel style="height: 35px">
-                        <h:outputText value="Liste des candidats" />
+                        <h:outputText value="Liste des Entretiens" />
                     </p:outputPanel>
                 </f:facet>
 
-                <p:column filterBy="#{unCandidat.nom}" headerText="Nom" filterMatchMode="contains">
-                    <h:outputText value="#{unCandidat.nom}" />
+                <p:column filterBy="#{unEntretien.candidat.nom}" headerText="Nom" filterMatchMode="contains">
+                    <h:outputText value="#{unEntretien.candidat.nom}" />
                 </p:column>
 
-                <p:column filterBy="#{unCandidat.prenom}" headerText="Prenom" filterMatchMode="contains">
-                    <h:outputText value="#{unCandidat.prenom}" />
+                <p:column filterBy="#{unEntretien.candidat.prenom}" headerText="Prenom" filterMatchMode="contains">
+                    <h:outputText value="#{unEntretien.candidat.prenom}" />
                 </p:column>
 
-                <p:column filterBy="#{unCandidat.email}" headerText="E-mail" filterMatchMode="contains">
-                    <h:outputText value="#{unCandidat.email}" />
+                <p:column filterBy="#{unEntretien.candidat.email}" headerText="E-mail" filterMatchMode="contains">
+                    <h:outputText value="#{unEntretien.candidat.email}" />
                 </p:column>
 
-                <p:column filterBy="#{unCandidat.tel}" headerText="Fixe" filterMatchMode="contains">
-                    <h:outputText value="#{unCandidat.tel}" />
+                <p:column filterBy="#{unEntretien.candidat.tel}" headerText="Fixe" filterMatchMode="contains">
+                    <h:outputText value="#{unEntretien.candidat.tel}" />
                 </p:column>
 
-                <p:column filterBy="#{unCandidat.portable}" headerText="Portable" filterMatchMode="contains">
-                    <h:outputText value="#{unCandidat.portable}" />
+                <p:column filterBy="#{unEntretien.candidat.portable}" headerText="Portable" filterMatchMode="contains">
+                    <h:outputText value="#{unEntretien.candidat.portable}" />
                 </p:column>
 
                 <p:column headerText="Actions">
-                    <h:commandButton value="Allez à la candidature" action="#{formulaireCandidature.toFormulaireCandidature(unCandidat)}"/>
+                    <h:commandButton value="Allez à la candidature" action="#{formulaireCandidature.toFormulaireCandidature(unEntretien)}"/>
                 </p:column>
 
             </p:dataTable>
