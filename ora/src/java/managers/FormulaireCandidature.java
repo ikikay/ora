@@ -104,48 +104,7 @@ public class FormulaireCandidature implements Serializable {
     private Boolean moto = false;
     private Boolean scooter = false;
 
-    //Note Dossier Scolaire
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Matières générales'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Matières générales'")
-    private int ds1;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Matières techniques'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Matières techniques'")
-    private int ds2;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Assiduité / Comportement'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Assiduité / Comportement'")
-    private int ds3;
-
     private String observationScolaire;
-    //Note Entretien
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Ouverture d'esprit'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Ouverture d'esprit'")
-    private int e1;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Aisance relationnelle, confiance en soi'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Aisance relationnelle, confiance en soi'")
-    private int e2;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Choix du métier / connaissance de la formation'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Choix du métier / connaissance de la formation'")
-    private int e3;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Connaissance de l'apprentissage et de ses contraintes'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Connaissance de l'apprentissage et de ses contraintes'")
-    private int e4;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Degré de motivation'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Degré de motivation'")
-    private int e5;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'pproche pour la recherche d'entreprise'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'pproche pour la recherche d'entreprise'")
-    private int e6;
-
-    @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Prédispositions techniques'")
-    @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Prédispositions techniques'")
-    private int e7;
 
     private String observationEntretien;
     //Conclusion
@@ -183,7 +142,7 @@ public class FormulaireCandidature implements Serializable {
 
     @PostConstruct
     public void init() {
-        if (entretien.getCandidat() != null) {
+        if (entretien != null) {
             // Pré remplissage des champs
             this.nom = entretien.getCandidat().getNom();
             this.prenom = entretien.getCandidat().getPrenom();
@@ -202,9 +161,6 @@ public class FormulaireCandidature implements Serializable {
             this.moto = entretien.getCandidat().getMoto();
             this.scooter = entretien.getCandidat().getScooter();
         }
-
-        // initialisation des champs
-        ds1 = ds2 = ds3 = e1 = e2 = e3 = e4 = e5 = e6 = e7 = 1;
     }
 
     public String toFormulaireCandidature(Entretien unEntretien) {
@@ -398,92 +354,12 @@ public class FormulaireCandidature implements Serializable {
         this.scooter = scooter;
     }
 
-    public int getDs1() {
-        return ds1;
-    }
-
-    public void setDs1(int ds1) {
-        this.ds1 = ds1;
-    }
-
-    public int getDs2() {
-        return ds2;
-    }
-
-    public void setDs2(int ds2) {
-        this.ds2 = ds2;
-    }
-
-    public int getDs3() {
-        return ds3;
-    }
-
-    public void setDs3(int ds3) {
-        this.ds3 = ds3;
-    }
-
     public String getObservationScolaire() {
         return observationScolaire;
     }
 
     public void setObservationScolaire(String observationScolaire) {
         this.observationScolaire = observationScolaire;
-    }
-
-    public int getE1() {
-        return e1;
-    }
-
-    public void setE1(int e1) {
-        this.e1 = e1;
-    }
-
-    public int getE2() {
-        return e2;
-    }
-
-    public void setE2(int e2) {
-        this.e2 = e2;
-    }
-
-    public int getE3() {
-        return e3;
-    }
-
-    public void setE3(int e3) {
-        this.e3 = e3;
-    }
-
-    public int getE4() {
-        return e4;
-    }
-
-    public void setE4(int e4) {
-        this.e4 = e4;
-    }
-
-    public int getE5() {
-        return e5;
-    }
-
-    public void setE5(int e5) {
-        this.e5 = e5;
-    }
-
-    public int getE6() {
-        return e6;
-    }
-
-    public void setE6(int e6) {
-        this.e6 = e6;
-    }
-
-    public int getE7() {
-        return e7;
-    }
-
-    public void setE7(int e7) {
-        this.e7 = e7;
     }
 
     public String getObservationEntretien() {
@@ -554,17 +430,7 @@ public class FormulaireCandidature implements Serializable {
         //System.out.println("Permis Moto : " + this.permisA);
         //System.out.println("Moto : " + this.moto);
         //System.out.println("Scooter : " + this.scooter);
-        System.out.println("Matières générales : " + this.ds1);
-        System.out.println("Matières techniques : " + this.ds2);
-        System.out.println("Assiduité / Comportement : " + this.ds3);
         System.out.println("Observation Dossier Scolaire : " + this.observationScolaire);
-        System.out.println("Ouverture d'esprit : " + this.e1);
-        System.out.println("Aisance relationnelle, confiance en soi : " + this.e2);
-        System.out.println("Choix du métier / connaissance de la formation : " + this.e3);
-        System.out.println("Connaissance de l'apprentissage et de ses contraintes : " + this.e4);
-        System.out.println("Degré de motivation : " + this.e5);
-        System.out.println("Approche pour la recherche d'entreprise : " + this.e6);
-        System.out.println("Prédispositions techniques : " + this.e7);
         System.out.println("Observation Entretien : " + this.observationEntretien);
         //System.out.println("Conclusion : " + this.conclusion);
         System.out.println("Avis : " + this.avis);

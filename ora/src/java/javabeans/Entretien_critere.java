@@ -74,12 +74,11 @@ public class Entretien_critere implements Serializable {
         this.entretien = entretien;
     }
 
-    public int getObservation() {
+    public int getNote() {
         return note;
     }
 
-    public void setObservation(int note) {
+    public void setNote(int note) {
         this.note = note;
     }
-   
 }

@@ -24,7 +24,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -34,7 +33,6 @@ import javax.validation.constraints.NotNull;
 @SessionScoped
 public class ListeCandidats implements Serializable {
 
-    private List<Candidat> lesCandidats;
     private List<Entretien> lesEntretiens;
 
     private Candidat candidat;
@@ -76,12 +74,17 @@ public class ListeCandidats implements Serializable {
         } else {
             entretienFacade.create(entretienToAdd);
             candidatFacade.create(candidatToAdd);
+            candidatToAdd.getLesEntretiens().add(entretienToAdd);
+            entretienToAdd.setCandidat(candidatToAdd);
+            entretienFacade.edit(entretienToAdd);
+            candidatFacade.edit(candidatToAdd);
+
             lesCriteres = critereFacade.findAll();
             for (Critere unCritere : lesCriteres) {
                 Entretien_critere unEntretienCritere = new Entretien_critere();
                 unEntretienCritere.setCritere(unCritere);
                 unEntretienCritere.setEntretien(entretienToAdd);
-                unEntretienCritere.setObservation(1);
+                unEntretienCritere.setNote(1);
                 entretien_critereFace.create(unEntretienCritere);
 
             }
@@ -144,20 +147,6 @@ public class ListeCandidats implements Serializable {
      */
     public void setCandidatToEdit(Candidat candidatToEdit) {
         this.candidatToEdit = candidatToEdit;
-    }
-
-    public List<Candidat> getLesCandidats() {
-        try {
-            lesCandidats = candidatFacade.findAll();
-
-        } catch (EJBException ee) {
-            //return lesCandidats = new ArrayList<>();
-        }
-        return lesCandidats;
-    }
-
-    public void setLesCandidats(List<Candidat> lesCandidats) {
-        this.lesCandidats = lesCandidats;
     }
 
     public List<Promotion> getLesPromotions() {
