@@ -30,7 +30,7 @@ public class Entretien_critere implements Serializable {
     private int idCategorie_critere;
 
     @ManyToOne
-    @JoinColumn(name = "fk_categorie_critere")
+    @JoinColumn(name = "fk_critere")
     private Critere critere;
 
     @ManyToOne
@@ -39,6 +39,16 @@ public class Entretien_critere implements Serializable {
 
     @Column(name = "note")
     private String observation;   
+
+    public Entretien_critere() {
+    }
+
+    public Entretien_critere(int idCategorie_critere, Critere critere, Entretien entretien, String observation) {
+        this.idCategorie_critere = idCategorie_critere;
+        this.critere = critere;
+        this.entretien = entretien;
+        this.observation = observation;
+    }
 
     public int getIdCategorie_critere() {
         return idCategorie_critere;
@@ -71,6 +81,5 @@ public class Entretien_critere implements Serializable {
     public void setObservation(String observation) {
         this.observation = observation;
     }
-    
-    
+   
 }

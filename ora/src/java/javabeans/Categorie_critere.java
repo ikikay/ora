@@ -7,11 +7,13 @@ package javabeans;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -31,13 +33,20 @@ public class Categorie_critere implements Serializable {
     @Column(name = "libelle")
     private String libelle;
 
-    public Categorie_critere(int idCategorie_critere, List<Critere> critere, String libelle) {
-        this.idCategorie_critere = idCategorie_critere;
-        this.libelle = libelle;
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorieCritere")
+    private List<Critere> lesCriteres;
+            
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorieCritere")
+    private List<Categorie_critere_entretien> leCategorieCritereEntretien;
 
     public Categorie_critere() {
+    }
 
+    public Categorie_critere(int idCategorie_critere, String libelle, List<Critere> lesCriteres, List<Categorie_critere_entretien> leCategorieCritereEntretien) {
+        this.idCategorie_critere = idCategorie_critere;
+        this.libelle = libelle;
+        this.lesCriteres = lesCriteres;
+        this.leCategorieCritereEntretien = leCategorieCritereEntretien;
     }
 
     public int getIdCategorie_critere() {
@@ -56,4 +65,20 @@ public class Categorie_critere implements Serializable {
         this.libelle = libelle;
     }
 
+    public List<Critere> getLesCriteres() {
+        return lesCriteres;
+    }
+
+    public void setLesCriteres(List<Critere> lesCriteres) {
+        this.lesCriteres = lesCriteres;
+    }
+
+    public List<Categorie_critere_entretien> getLeCategorieCritereEntretien() {
+        return leCategorieCritereEntretien;
+    }
+
+    public void setLeCategorieCritereEntretien(List<Categorie_critere_entretien> leCategorieCritereEntretien) {
+        this.leCategorieCritereEntretien = leCategorieCritereEntretien;
+    }
+    
 }

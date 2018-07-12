@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "categorie_critere_entretien")
-public class Entretien_categorie_critere {
+public class Categorie_critere_entretien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,15 +38,14 @@ public class Entretien_categorie_critere {
     @Column(name = "observation")
     private String observation;
 
-    public Entretien_categorie_critere(int idCategorie_critere, Categorie_critere categorieCritere, Entretien entretien, String observation) {
+    public Categorie_critere_entretien() {
+    }
+
+    public Categorie_critere_entretien(int idCategorie_critere, Categorie_critere categorieCritere, Entretien entretien, String observation) {
         this.idCategorie_critere = idCategorie_critere;
         this.categorieCritere = categorieCritere;
         this.entretien = entretien;
         this.observation = observation;
-    }
-
-    public Entretien_categorie_critere() {
-
     }
 
     public int getIdCategorie_critere() {

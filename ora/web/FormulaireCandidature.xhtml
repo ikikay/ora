@@ -104,6 +104,14 @@
             <h3>Dossier Scolaire</h3>
             <h:panelGrid columns="1">
 
+                <p:repeat value="#{formulaireCandidature.lescriteres}" var="unCritere">
+
+                    <h:outputText value="#{unCritere.libelle}"/>
+                    <p:inputText id="ds#{unCritere.idCritere}" value="#{formulaireCandidature.ds1}"/>
+                    <p:slider for="ds#{unCritere.idCritere}" minValue="1" maxValue="7"/>
+
+                </p:repeat>
+
                 <h:outputText value="Matières générales"/>
                 <p:inputText id="ds1" value="#{formulaireCandidature.ds1}"/>
                 <p:slider for="ds1" minValue="1" maxValue="7"/>
