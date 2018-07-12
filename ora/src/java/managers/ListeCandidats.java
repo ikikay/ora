@@ -6,10 +6,16 @@
 package managers;
 
 import facades.CandidatFacade;
+import facades.CritereFacade;
+import facades.EntretienFacade;
+import facades.Entretien_critereFacade;
 import facades.PromotionFacade;
 import java.io.Serializable;
 import java.util.List;
 import javabeans.Candidat;
+import javabeans.Critere;
+import javabeans.Entretien;
+import javabeans.Entretien_critere;
 import javabeans.Promotion;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,7 +24,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -30,7 +36,6 @@ public class ListeCandidats implements Serializable {
 
     private List<Candidat> lesCandidats;
     private Candidat candidat;
-    private Promotion promotion;
     private Candidat candidatToAdd;
     private Candidat candidatToEdit;
     @EJB
@@ -40,48 +45,70 @@ public class ListeCandidats implements Serializable {
     @EJB
     private PromotionFacade promotionFacade;
 
+    private List<Critere> lesCriteres;
+    @EJB
+    private CritereFacade critereFacade;
+
+    private Entretien entretienToAdd;
+    @EJB
+    private EntretienFacade entretienFacade;
+
+    @EJB
+    private Entretien_critereFacade entretien_critereFace;
+
     @PostConstruct
     public void init() {
         candidatToEdit = new Candidat();
         candidatToAdd = new Candidat();
+        entretienToAdd = new Entretien();
     }
 
     public String toAddCandidat() {
         return "toFormulaireCandidature";
-    
-    } 
-    public void createCandidat(ActionEvent actionEvent) {
-        candidatFacade.create(candidatToAdd);
-        candidatToAdd = new Candidat();
-        addMessage("Candidat ajoutÃ© avec succÃ¨s !");
+
     }
-    
-   public void addMessage(String summary) {
+
+    public String createCandidat() {
+        if (entretienToAdd.getPromotion() == null) {
+            System.out.println("Candidat non ajouté, manque diplome");
+        } else {
+            entretienFacade.create(entretienToAdd);
+            candidatFacade.create(candidatToAdd);
+            lesCriteres = critereFacade.findAll();
+            for (Critere unCritere : lesCriteres) {
+                Entretien_critere unEntretienCritere = new Entretien_critere();
+                unEntretienCritere.setCritere(unCritere);
+                unEntretienCritere.setEntretien(entretienToAdd);
+                unEntretienCritere.setObservation(1);
+                entretien_critereFace.create(unEntretienCritere);
+
+            }
+            candidatToAdd = new Candidat();
+            entretienToAdd = new Entretien();
+            System.out.println("Candidat ajouté avec succés !");
+        }
+
+        return "toListeCandidats";
+    }
+
+    public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    public void removeCandidat( Candidat candidatToRemove) {
+
+    public void removeCandidat(Candidat candidatToRemove) {
         System.out.println(candidatToRemove.getIdCandidat());
         candidatFacade.remove(candidatToRemove);
 
         addMessage("Candidat crée avec succes");
     }
 
-    
     public Candidat getCandidat() {
         return candidat;
     }
 
     public void setCandidat(Candidat candidat) {
         this.candidat = candidat;
-    }
-
-    public Promotion getPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(Promotion promotion) {
-        this.promotion = promotion;
     }
 
     public Candidat getCandidatToAdd() {
@@ -96,10 +123,24 @@ public class ListeCandidats implements Serializable {
         return candidatToEdit;
     }
 
+    public List<Critere> getLesCriteres() {
+        try {
+            lesCriteres = critereFacade.findAll();
+
+        } catch (EJBException ee) {
+            // return lescriteres = new ArrayList<>();
+        }
+        return lesCriteres;
+    }
+
+    public void setLesCriteres(List<Critere> lesCriteres) {
+        this.lesCriteres = lesCriteres;
+    }
+
     /*
     Getters and Setters
      */
-    public void setCandidatToEdit(Candidat candidatToEdit) {    
+    public void setCandidatToEdit(Candidat candidatToEdit) {
         this.candidatToEdit = candidatToEdit;
     }
 
@@ -129,6 +170,14 @@ public class ListeCandidats implements Serializable {
 
     public void setLesPromotions(List<Promotion> lesPromotions) {
         this.lesPromotions = lesPromotions;
+    }
+
+    public Entretien getEntretienToAdd() {
+        return entretienToAdd;
+    }
+
+    public void setEntretienToAdd(Entretien entretienToAdd) {
+        this.entretienToAdd = entretienToAdd;
     }
 
 }

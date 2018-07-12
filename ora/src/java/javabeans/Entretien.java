@@ -43,7 +43,7 @@ public class Entretien implements Serializable {
     private LocalDate dateEntretien;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "id_parcours", unique = false, nullable = false, updatable = true)
+    @JoinColumn(name = "id_parcours", unique = false, updatable = true)
     private Parcours parcours;
 
     @ManyToOne

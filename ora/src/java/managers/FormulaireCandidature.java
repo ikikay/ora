@@ -1,8 +1,8 @@
 package managers;
 
 import facades.CandidatFacade;
+import facades.Categorie_critere_entretienFacade;
 import facades.EntretienFacade;
-import facades.Entretien_categorie_critereFacade;
 import facades.Entretien_critereFacade;
 import facades.ParcoursFacade;
 import facades.PromotionFacade;
@@ -171,7 +171,7 @@ public class FormulaireCandidature implements Serializable {
 
     private Categorie_critere_entretien unEntretientCategorieCritereToAdd;
     @EJB
-    private Entretien_categorie_critereFacade entretienCategorieCritereFacade;
+    private Categorie_critere_entretienFacade categorieCritereEntretienFacade;
 
     private Entretien_critere unEntretientCritereToAdd;
     @EJB

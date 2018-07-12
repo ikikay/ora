@@ -8,10 +8,9 @@
     </h:head>
     <h:body>
 
-        <h:form>
-            <p:selectOneMenu  value="#{listeCandidats.promotion}" converter="entityConverter">
-                <f:selectItems value="#{listeCandidats.lesPromotions}" var="promotion" itemLabel="#{promotion.titre}"/>
-            </p:selectOneMenu>
+        <h:messages errorStyle="color:red;"/>
+
+        <h:form id="addCandidatForm">
             <p:commandButton id="addCandidat" type="button" value="Ajouter un candidat" style="float:left" icon="ui-icon-calculator" />
             <p:overlayPanel id="candidatPanel" for="addCandidat" hideEffect="fade" dynamic="true">
                 <h:panelGrid id="candidatGrid" columns="2" cellpadding="5">
@@ -20,13 +19,21 @@
                     <h:outputLabel value="Prenom : "/>
                     <p:inputText id="candidatPrenom" value="#{listeCandidats.candidatToAdd.prenom}" required="true"/>
                     <h:outputLabel value="Email : "/>
-                    <p:inputText id="candidatEmail" value="#{listeCandidats.candidatToAdd.email}" required="true"/>
-
-                    <h:outputLabel value="Tel : "/>
-                    <p:inputText id="candidatTel" value="#{listeCandidats.candidatToAdd.tel}" required="true"/>
-                    <p:commandButton value="Ajouter le candidat ?" ajax="true"  actionListener="#{listeCandidats.createCandidat}" styleClass="ui-priority-primary" />
+                    <p:inputText id="candidatEmail" value="#{listeCandidats.candidatToAdd.email}"/>
+                    <h:outputLabel value="Fixe: "/>
+                    <p:inputText id="candidatTel" value="#{listeCandidats.candidatToAdd.tel}" />
+                    <h:outputLabel value="Portable : "/>
+                    <p:inputText id="candidatPortable" value="#{listeCandidats.candidatToAdd.portable}" />
+                    <h:outputLabel for="diplome" value="Diplome" />
+                    <p:selectOneMenu id="diplome" value="#{listeCandidats.entretienToAdd.promotion}" converter="promotionConverter" required="true"
+                                     filter="true" filterMatchMode="startsWith"  effect="fade" style="width:180px" panelStyle="width:200px">
+                        <f:selectItems value="#{listeCandidats.lesPromotions}" var="promotion" itemLabel="#{promotion.titre}" />
+                    </p:selectOneMenu>
+                    <h:commandButton value="Ajouter le candidat ?" action="#{listeCandidats.createCandidat()}"/>
                 </h:panelGrid>
             </p:overlayPanel>
+        </h:form>
+        <h:form id="showCandidatsForm">
             <p:dataTable var="unCandidat" value="#{listeCandidats.lesCandidats}" widgetVar="candidatsTable"
                          emptyMessage="Aucun candidat n'a été trouvé">
 
@@ -46,6 +53,14 @@
 
                 <p:column filterBy="#{unCandidat.email}" headerText="E-mail" filterMatchMode="contains">
                     <h:outputText value="#{unCandidat.email}" />
+                </p:column>
+
+                <p:column filterBy="#{unCandidat.tel}" headerText="Fixe" filterMatchMode="contains">
+                    <h:outputText value="#{unCandidat.tel}" />
+                </p:column>
+
+                <p:column filterBy="#{unCandidat.portable}" headerText="Portable" filterMatchMode="contains">
+                    <h:outputText value="#{unCandidat.portable}" />
                 </p:column>
 
                 <p:column headerText="Actions">

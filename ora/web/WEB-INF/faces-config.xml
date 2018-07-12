@@ -11,8 +11,8 @@
             <to-view-id>/FormulaireCandidature.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>toAddCandidat</from-outcome>
-            <to-view-id>/NouveauCandidat.xhtml</to-view-id>
+            <from-outcome>toListeCandidats</from-outcome>
+            <to-view-id>/ListeCandidats</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

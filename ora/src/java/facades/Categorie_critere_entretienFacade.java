@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author iLaziKx
+ * @author Ikikay
  */
 @Stateless
-public class Entretien_categorie_critereFacade extends AbstractFacade<Categorie_critere_entretien> {
+public class Categorie_critere_entretienFacade extends AbstractFacade<Categorie_critere_entretien> {
 
     @PersistenceContext(unitName = "oraPU")
     private EntityManager em;
@@ -25,7 +25,7 @@ public class Entretien_categorie_critereFacade extends AbstractFacade<Categorie_
         return em;
     }
 
-    public Entretien_categorie_critereFacade() {
+    public Categorie_critere_entretienFacade() {
         super(Categorie_critere_entretien.class);
     }
     
