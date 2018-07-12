@@ -11,8 +11,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javabeans.Candidat;
+import javabeans.Critere;
 import javabeans.Entretien;
-import javabeans.Entretien_categorie_critere;
+import javabeans.Categorie_critere_entretien;
 import javabeans.Entretien_critere;
 import javabeans.Parcours;
 import javabeans.Promotion;
@@ -103,7 +104,8 @@ public class FormulaireCandidature implements Serializable {
     private Boolean permisA = false;
     private Boolean moto = false;
     private Boolean scooter = false;
-    //Dossier Scolaire
+
+    //Note Dossier Scolaire
     @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Matières générales'")
     @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Matières générales'")
     private int ds1;
@@ -117,7 +119,7 @@ public class FormulaireCandidature implements Serializable {
     private int ds3;
 
     private String observationScolaire;
-    //Entretien
+    //Note Entretien
     @Min(value = 1, message = "Entrez une note entre 1 et 7 pour 'Ouverture d'esprit'")
     @Max(value = 7, message = "Entrez une note entre 1 et 7 pour 'Ouverture d'esprit'")
     private int e1;
@@ -168,7 +170,7 @@ public class FormulaireCandidature implements Serializable {
     @EJB
     private EntretienFacade entretienFacade;
 
-    private Entretien_categorie_critere unEntretientCategorieCritereToAdd;
+    private Categorie_critere_entretien unEntretientCategorieCritereToAdd;
     @EJB
     private Entretien_categorie_critereFacade entretienCategorieCritereFacade;
 
@@ -558,7 +560,7 @@ public class FormulaireCandidature implements Serializable {
         System.out.println("Assiduité / Comportement : " + this.ds3);
         System.out.println("Observation Dossier Scolaire : " + this.observationScolaire);
         System.out.println("Ouverture d'esprit : " + this.e1);
-        System.out.println("Aisance relationelle, confiance en soi : " + this.e2);
+        System.out.println("Aisance relationnelle, confiance en soi : " + this.e2);
         System.out.println("Choix du métier / connaissance de la formation : " + this.e3);
         System.out.println("Connaissance de l'apprentissage et de ses contraintes : " + this.e4);
         System.out.println("Degré de motivation : " + this.e5);
@@ -594,7 +596,7 @@ public class FormulaireCandidature implements Serializable {
         unEntretientToAdd.setParcours(unParcoursToAdd);
         unEntretientToAdd.setCandidat(leCandidat);
         unEntretientToAdd.setPromotion(this.projet);
-        //unEntretientToAdd.setIs_apprenti(?);
+        unEntretientToAdd.setIs_apprenti(false);
 
         //unEntretientCategorieCritereToAdd.setCategorieCritere(?);
         unEntretientCategorieCritereToAdd.setEntretien(unEntretientToAdd);

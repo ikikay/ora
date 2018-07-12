@@ -6,6 +6,8 @@
 package javabeans;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,13 +30,13 @@ public class Critere implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_critere", nullable = false, length = 255)
-    private int idCandidat;
+    private int idCritere;
 
     @Column(name = "libelle")
     private String libelle;
 
-    @Column(name = "niveau")
-    private int niveau;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "critere")
+    private List<Entretien_critere> lesEntretienCritere;
 
     @ManyToOne
     @JoinColumn(name = "fk_categorieCritere")
@@ -43,19 +46,19 @@ public class Critere implements Serializable {
 
     }
 
-    public Critere(int idCandidat, String libelle, int niveau, Categorie_critere categorieCritere) {
-        this.idCandidat = idCandidat;
+    public Critere(int idCritere, String libelle, List<Entretien_critere> lesEntretienCritere, Categorie_critere categorieCritere) {
+        this.idCritere = idCritere;
         this.libelle = libelle;
-        this.niveau = niveau;
+        this.lesEntretienCritere = lesEntretienCritere;
         this.categorieCritere = categorieCritere;
     }
 
-    public int getIdCandidat() {
-        return idCandidat;
+    public int getIdCritere() {
+        return idCritere;
     }
 
-    public void setIdCandidat(int idCandidat) {
-        this.idCandidat = idCandidat;
+    public void setIdCritere(int idCritere) {
+        this.idCritere = idCritere;
     }
 
     public String getLibelle() {
@@ -66,12 +69,12 @@ public class Critere implements Serializable {
         this.libelle = libelle;
     }
 
-    public int getNiveau() {
-        return niveau;
+    public List<Entretien_critere> getLesEntretienCritere() {
+        return lesEntretienCritere;
     }
 
-    public void setNiveau(int niveau) {
-        this.niveau = niveau;
+    public void setLesEntretienCritere(List<Entretien_critere> lesEntretienCritere) {
+        this.lesEntretienCritere = lesEntretienCritere;
     }
 
     public Categorie_critere getCategorieCritere() {
@@ -80,6 +83,6 @@ public class Critere implements Serializable {
 
     public void setCategorieCritere(Categorie_critere categorieCritere) {
         this.categorieCritere = categorieCritere;
-    } 
+    }
 
 }
