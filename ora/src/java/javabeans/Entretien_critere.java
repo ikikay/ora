@@ -38,16 +38,16 @@ public class Entretien_critere implements Serializable {
     private Entretien entretien;
 
     @Column(name = "note")
-    private String observation;   
+    private int note;   
 
     public Entretien_critere() {
     }
 
-    public Entretien_critere(int idCategorie_critere, Critere critere, Entretien entretien, String observation) {
+    public Entretien_critere(int idCategorie_critere, Critere critere, Entretien entretien, int note) {
         this.idCategorie_critere = idCategorie_critere;
         this.critere = critere;
         this.entretien = entretien;
-        this.observation = observation;
+        this.note = note;
     }
 
     public int getIdCategorie_critere() {
@@ -74,12 +74,12 @@ public class Entretien_critere implements Serializable {
         this.entretien = entretien;
     }
 
-    public String getObservation() {
-        return observation;
+    public int getObservation() {
+        return note;
     }
 
-    public void setObservation(String observation) {
-        this.observation = observation;
+    public void setObservation(int note) {
+        this.note = note;
     }
    
 }
