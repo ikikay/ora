@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javabeans.Candidat;
-import javabeans.Critere;
 import javabeans.Entretien;
 import javabeans.Categorie_critere_entretien;
 import javabeans.Entretien_critere;
@@ -567,8 +566,23 @@ public class FormulaireCandidature implements Serializable {
         System.out.println("Approche pour la recherche d'entreprise : " + this.e6);
         System.out.println("Prédispositions techniques : " + this.e7);
         System.out.println("Observation Entretien : " + this.observationEntretien);
-        System.out.println("Conclusion : " + this.conclusion);
+        //System.out.println("Conclusion : " + this.conclusion);
         System.out.println("Avis : " + this.avis);
+
+        unParcoursToAdd.setActuelle(this.actuelle);
+        unParcoursToAdd.setEtablissement(this.etablissement);
+        unParcoursToAdd.setDiplome(this.diplome);
+        unParcoursToAdd.setCommentaire(this.commentaire);
+
+        unEntretientToAdd.setAvis(this.avis);
+        unEntretientToAdd.setConclusion(this.conclusion);        
+        unEntretientToAdd.setDateEntretien(LocalDate.now());
+        unEntretientToAdd.setParcours(unParcoursToAdd);
+        unEntretientToAdd.setCandidat(leCandidat);
+        //ENTRETIENSCRITERES
+        //CATEGORIESCRITERES
+        unEntretientToAdd.setPromotion(this.projet);
+        unEntretientToAdd.setIs_apprenti(false);
 
         leCandidat.setNom(this.nom);
         leCandidat.setPrenom(this.prenom);
@@ -585,26 +599,9 @@ public class FormulaireCandidature implements Serializable {
         leCandidat.setVoiture(this.voiture);
         leCandidat.setMoto(this.moto);
         leCandidat.setScooter(this.scooter);
+        leCandidat.getLesEntretiens().add(unEntretientToAdd);
 
-        unParcoursToAdd.setActuelle(this.actuelle);
-        unParcoursToAdd.setEtablissement(this.etablissement);
-        unParcoursToAdd.setDiplome(this.diplome);
-        unParcoursToAdd.setCommentaire(this.commentaire);
 
-        unEntretientToAdd.setAvis(this.avis);
-        unEntretientToAdd.setDateEntretien(LocalDate.now());
-        unEntretientToAdd.setParcours(unParcoursToAdd);
-        unEntretientToAdd.setCandidat(leCandidat);
-        unEntretientToAdd.setPromotion(this.projet);
-        unEntretientToAdd.setIs_apprenti(false);
-
-        //unEntretientCategorieCritereToAdd.setCategorieCritere(?);
-        unEntretientCategorieCritereToAdd.setEntretien(unEntretientToAdd);
-        //unEntretientCategorieCritereToAdd.setObservation(this.observationEntretien);
-
-        //unEntretientCritereToAdd.setCritere(?);
-        unEntretientCritereToAdd.setEntretien(unEntretientToAdd);
-        //unEntretientCritereToAdd.setObservation(this.observationScolaire);
 
     }
 

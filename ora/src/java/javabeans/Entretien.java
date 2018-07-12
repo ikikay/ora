@@ -46,8 +46,8 @@ public class Entretien implements Serializable {
     @JoinColumn(name = "id_parcours", unique = false, nullable = false, updatable = true)
     private Parcours parcours;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "id_Candidat", unique = false, nullable = false, updatable = true)
+    @ManyToOne
+    @JoinColumn(name = "fk_candidat")
     private Candidat candidat;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entretien")
@@ -77,20 +77,6 @@ public class Entretien implements Serializable {
         this.lesCategorieCritereEntretien = lesCategorieCritereEntretien;
         this.promotion = promotion;
         this.is_apprenti = is_apprenti;
-
-        /*
-                CriteresManager.
-
-        for (Critere unCritere = CriteresManager. ; unCritere.hasNext();) {
-            String item = unCritere.next();
-            System.out.println(item);
-        }
-
-        for each criteres
-                : entretiencritere.add(critere) {
-            this.promotion = promotion;
-        }
-         */
     }
 
     public int getId() {

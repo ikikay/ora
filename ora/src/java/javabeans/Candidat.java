@@ -7,13 +7,18 @@ package javabeans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import tools.LocalDateAttributeConverter;
 
@@ -77,10 +82,14 @@ public class Candidat implements Serializable {
     @Column(name = "scooter")
     private Boolean scooter;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidat")
+    @JoinColumn(name = "id_Candidat", unique = false, nullable = false, updatable = true)
+    private List<Entretien> lesEntretiens;
+
     public Candidat() {
     }
 
-    public Candidat(int idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter) {
+    public Candidat(int idCandidat, String nom, String prenom, String codePostal, String ville, String rue, LocalDate dteNaissance, String tel, String portable, String email, String secuSocial, Boolean permisA, Boolean permisB, Boolean voiture, Boolean moto, Boolean scooter, List<Entretien> lesEntretiens) {
         this.idCandidat = idCandidat;
         this.nom = nom;
         this.prenom = prenom;
@@ -97,6 +106,7 @@ public class Candidat implements Serializable {
         this.voiture = voiture;
         this.moto = moto;
         this.scooter = scooter;
+        this.lesEntretiens = lesEntretiens;
     }
 
     public int getIdCandidat() {
@@ -225,6 +235,14 @@ public class Candidat implements Serializable {
 
     public void setScooter(Boolean scooter) {
         this.scooter = scooter;
+    }
+
+    public List<Entretien> getLesEntretiens() {
+        return lesEntretiens;
+    }
+
+    public void setLesEntretiens(List<Entretien> lesEntretiens) {
+        this.lesEntretiens = lesEntretiens;
     }
 
     @Override
