@@ -9,13 +9,31 @@
     <h:body>
 
         <h:form>
+            <p:selectOneMenu  value="#{listeCandidats.promotion}" converter="entityConverter">
+                <f:selectItems value="#{listeCandidats.lesPromotions}" var="promotion" itemLabel="#{promotion.titre}"/>
+            </p:selectOneMenu>
+            <p:commandButton id="addCandidat" type="button" value="Ajouter un candidat" style="float:left" icon="ui-icon-calculator" />
+            <p:overlayPanel id="candidatPanel" for="addCandidat" hideEffect="fade" dynamic="true">
+                <h:panelGrid id="candidatGrid" columns="2" cellpadding="5">
+                    <h:outputLabel value="Nom : "/>
+                    <p:inputText id="candidatNom" value="#{listeCandidats.candidatToAdd.nom}" required="true"/>
+                    <h:outputLabel value="Prenom : "/>
+                    <p:inputText id="candidatPrenom" value="#{listeCandidats.candidatToAdd.prenom}" required="true"/>
+                    <h:outputLabel value="Email : "/>
+                    <p:inputText id="candidatEmail" value="#{listeCandidats.candidatToAdd.email}" required="true"/>
+
+                    <h:outputLabel value="Tel : "/>
+                    <p:inputText id="candidatTel" value="#{listeCandidats.candidatToAdd.tel}" required="true"/>
+                    <p:commandButton value="Ajouter le candidat ?" ajax="true"  actionListener="#{listeCandidats.createCandidat}" styleClass="ui-priority-primary" />
+                </h:panelGrid>
+            </p:overlayPanel>
             <p:dataTable var="unCandidat" value="#{listeCandidats.lesCandidats}" widgetVar="candidatsTable"
                          emptyMessage="Aucun candidat n'a été trouvé">
 
                 <f:facet name="header">
                     <p:outputPanel>
                         <h:outputText value="Liste des candidats" />
-                        <p:commandButton id="addCandidat" type="button" value="Ajouter un candidat" style="float:right" icon="ui-icon-calculator" />
+
                     </p:outputPanel>
                 </f:facet>
 
