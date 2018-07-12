@@ -102,16 +102,14 @@
 
 
             <h3>Dossier Scolaire</h3>
-            <h:panelGrid columns="1">
 
-                <p:repeat value="#{formulaireCandidature.entretien.lesEntretienCritere}" var="unEntretienCritere">
-
+            <p:repeat value="#{formulaireCandidature.entretien.lesEntretienCritere}" var="unEntretienCritere">
+                <h:panelGrid columns="2">
                     <h:outputText value="#{unEntretienCritere.critere.libelle}"/>
-                    <p:inputText id="note#{unEntretienCritere.critere.id}" value="#{unEntretienCritere.note}"/>
-                    <p:slider for="note#{unEntretienCritere.critere.id}" minValue="1" maxValue="7"/>
-
-                </p:repeat>
-
+                    <p:inputText id="note#{unEntretienCritere.critere.idCritere}" value="#{unEntretienCritere.note}"/>
+                </h:panelGrid>  
+            </p:repeat>
+            <h:panelGrid columns="2">
                 <h:outputText value="Observation"/>   
                 <p:inputTextarea rows="2" id="observationScolaire" value="#{formulaireCandidature.observationScolaire}"/>
 
