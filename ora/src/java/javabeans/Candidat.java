@@ -37,29 +37,29 @@ public class Candidat implements Serializable {
     @Column(name = "prenom", nullable = false, length = 255)
     private String prenom;
 
-    @Column(name = "code_postal", nullable = true, length = 5)
+    @Column(name = "code_postal", length = 5)
     private String codePostal;
 
-    @Column(name = "ville", nullable = true, length = 255)
+    @Column(name = "ville", length = 255)
     private String ville;
 
-    @Column(name = "rue", nullable = true, length = 255)
+    @Column(name = "rue", length = 255)
     private String rue;
 
-    @Column(name = "dte_naissance", nullable = true, length = 255)
+    @Column(name = "dte_naissance", length = 255)
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dteNaissance;
 
-    @Column(name = "tel", nullable = true, length = 10)
+    @Column(name = "tel", length = 10)
     private String tel;
 
-    @Column(name = "portable", nullable = true, length = 10)
+    @Column(name = "portable", length = 10)
     private String portable;
 
-    @Column(name = "email", nullable = true, length = 255)
+    @Column(name = "email", length = 255)
     private String email;
 
-    @Column(name = "secu_social", nullable = true, length = 15)
+    @Column(name = "secu_social", length = 15)
     private String secuSocial;
 
     @Column(name = "permis_a")
