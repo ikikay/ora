@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <p:dataTable var="unCandidat" value="#{listeCandidats.lesCandidats}" widgetVar="candidatsTable"
+                         emptyMessage="Aucun candidat n'a été trouvé">
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Liste des candidats" />
+                        <p:commandButton id="addCandidat" type="button" value="Ajouter un candidat" style="float:right" icon="ui-icon-calculator" />
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column filterBy="#{unCandidat.nom}" headerText="Nom" filterMatchMode="contains">
+                    <h:outputText value="#{unCandidat.nom}" />
+                </p:column>
+
+                <p:column filterBy="#{unCandidat.prenom}" headerText="Prenom" filterMatchMode="contains">
+                    <h:outputText value="#{unCandidat.prenom}" />
+                </p:column>
+
+                <p:column filterBy="#{unCandidat.email}" headerText="E-mail" filterMatchMode="contains">
+                    <h:outputText value="#{unCandidat.email}" />
+                </p:column>
+
+                <p:column headerText="Actions">
+                    <h:commandButton value="Allez à la candidature" action="#{formulaireCandidature.toFormulaireCandidature(unCandidat)}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+    </h:body>
+</html>

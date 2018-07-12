@@ -182,23 +182,25 @@ public class FormulaireCandidature implements Serializable {
 
     @PostConstruct
     public void init() {
-        // Pré remplissage des champs
-        this.nom = leCandidat.getNom();
-        this.prenom = leCandidat.getPrenom();
-        this.rue = leCandidat.getRue();
-        this.codePostal = leCandidat.getCodePostal();
-        this.ville = leCandidat.getVille();
-        this.dateDeNaissance = localDateToString(leCandidat.getDteNaissance());
-        this.tel = leCandidat.getTel();
-        this.portable = leCandidat.getPortable();
-        this.email = leCandidat.getEmail();
-        this.secuSocial = leCandidat.getSecuSocial();
+        if (leCandidat != null) {
+            // Pré remplissage des champs
+            this.nom = leCandidat.getNom();
+            this.prenom = leCandidat.getPrenom();
+            this.rue = leCandidat.getRue();
+            this.codePostal = leCandidat.getCodePostal();
+            this.ville = leCandidat.getVille();
+            this.dateDeNaissance = localDateToString(leCandidat.getDteNaissance());
+            this.tel = leCandidat.getTel();
+            this.portable = leCandidat.getPortable();
+            this.email = leCandidat.getEmail();
+            this.secuSocial = leCandidat.getSecuSocial();
 
-        this.permisB = leCandidat.getPermisB();
-        this.voiture = leCandidat.getVoiture();
-        this.permisA = leCandidat.getPermisA();
-        this.moto = leCandidat.getMoto();
-        this.scooter = leCandidat.getScooter();
+            this.permisB = leCandidat.getPermisB();
+            this.voiture = leCandidat.getVoiture();
+            this.permisA = leCandidat.getPermisA();
+            this.moto = leCandidat.getMoto();
+            this.scooter = leCandidat.getScooter();
+        }
 
         // initialisation des champs
         ds1 = ds2 = ds3 = e1 = e2 = e3 = e4 = e5 = e6 = e7 = 1;
@@ -206,6 +208,7 @@ public class FormulaireCandidature implements Serializable {
 
     public String toFormulaireCandidature(Candidat unCandidat) {
         leCandidat = unCandidat;
+        init();
         return "toFormulaireCandidature";
     }
 
@@ -580,27 +583,27 @@ public class FormulaireCandidature implements Serializable {
         leCandidat.setVoiture(this.voiture);
         leCandidat.setMoto(this.moto);
         leCandidat.setScooter(this.scooter);
-        
+
         unParcoursToAdd.setActuelle(this.actuelle);
         unParcoursToAdd.setEtablissement(this.etablissement);
         unParcoursToAdd.setDiplome(this.diplome);
         unParcoursToAdd.setCommentaire(this.commentaire);
-        
+
         unEntretientToAdd.setAvis(this.avis);
         unEntretientToAdd.setDateEntretien(LocalDate.now());
         unEntretientToAdd.setParcours(unParcoursToAdd);
         unEntretientToAdd.setCandidat(leCandidat);
         unEntretientToAdd.setPromotion(this.projet);
         //unEntretientToAdd.setIs_apprenti(?);
-        
+
         //unEntretientCategorieCritereToAdd.setCategorieCritere(?);
         unEntretientCategorieCritereToAdd.setEntretien(unEntretientToAdd);
         //unEntretientCategorieCritereToAdd.setObservation(this.observationEntretien);
-        
+
         //unEntretientCritereToAdd.setCritere(?);
         unEntretientCritereToAdd.setEntretien(unEntretientToAdd);
         //unEntretientCritereToAdd.setObservation(this.observationScolaire);
-       
+
     }
 
 }
